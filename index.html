@@ -9,6 +9,162 @@
   <title>Meu Treino</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    /* ── EXERCISE IMAGE ── */
+    .ex-img-real {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      background: var(--surface2);
+    }
+    .ex-img-fallback {
+      width: 100%;
+      min-height: 160px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--surface2);
+      padding: 20px;
+    }
+    .ex-img-fallback .ex-gif-icon { font-size: 48px; }
+    .ex-img-fallback .ex-gif-muscles {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      text-align: center;
+    }
+    .ex-video-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--accent);
+      text-decoration: none;
+      margin: 8px 14px 0;
+      padding: 6px 12px;
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+      border-radius: 20px;
+      transition: background 0.2s;
+    }
+    .ex-video-link:hover { background: color-mix(in srgb, var(--accent) 18%, transparent); }
+
+    /* ── MUSCLE BADGE ── */
+    .muscle-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      padding: 10px 14px 0;
+    }
+    .muscle-badge {
+      font-size: 10px;
+      font-weight: 500;
+      padding: 3px 8px;
+      border-radius: 20px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .muscle-badge.primary {
+      background: color-mix(in srgb, var(--ec-badge, var(--accent)) 18%, transparent);
+      color: var(--ec-badge, var(--accent));
+      border: 1px solid color-mix(in srgb, var(--ec-badge, var(--accent)) 30%, transparent);
+    }
+    .muscle-badge.secondary {
+      background: var(--surface2);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    /* ── CONFIG TAB ── */
+    .config-section { padding: 16px 12px 40px; display: flex; flex-direction: column; gap: 16px; }
+    .config-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+    }
+    .config-card h3 {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+    }
+    .config-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      gap: 12px;
+    }
+    .config-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .config-row:first-of-type { padding-top: 0; }
+    .config-label { font-size: 13px; color: var(--text); flex: 1; }
+    .config-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .config-input {
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      padding: 6px 10px;
+      width: 140px;
+      text-align: center;
+    }
+    .config-input:focus { outline: none; border-color: var(--accent); }
+    .config-select {
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      padding: 6px 10px;
+      width: 140px;
+      cursor: pointer;
+    }
+    .config-select:focus { outline: none; border-color: var(--accent); }
+    .btn-save-config {
+      width: 100%;
+      padding: 14px;
+      background: var(--accent);
+      color: #0b0c0f;
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      letter-spacing: 0.02em;
+    }
+    .btn-save-config:hover { opacity: 0.9; }
+    .btn-save-config:active { transform: scale(0.98); }
+
+    .time-inputs { display: flex; gap: 8px; flex-wrap: wrap; }
+    .time-input-group { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; min-width: 60px; }
+    .time-input-group label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .time-input-group input {
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      padding: 6px 4px;
+      width: 100%;
+      text-align: center;
+    }
+    .time-input-group input:focus { outline: none; border-color: var(--accent); }
+    .time-input-group span { font-size: 9px; color: var(--muted); }
+  </style>
 </head>
 <body>
 
@@ -17,7 +173,7 @@
     <div class="splash-inner">
       <div class="splash-logo">💪</div>
       <h1 class="splash-title">MEU<br><span>TREINO</span></h1>
-      <p class="splash-sub">Ganho de massa · Iniciante · 3×/semana</p>
+      <p class="splash-sub" id="splashSub">Ganho de massa · Iniciante · 3×/semana</p>
     </div>
   </div>
 
@@ -33,11 +189,7 @@
         </div>
         <button class="btn-reset" id="btnReset" title="Resetar semana">↺</button>
       </div>
-
-      <!-- WEEKLY STRIP -->
       <div class="week-strip" id="weekStrip"></div>
-
-      <!-- PROGRESS BAR -->
       <div class="week-progress">
         <div class="week-progress-bar" id="weekProgressBar"></div>
       </div>
@@ -65,6 +217,10 @@
         <span class="tab-letter">💡</span>
         <span class="tab-name">Dicas</span>
       </button>
+      <button class="tab-btn" data-tab="config">
+        <span class="tab-letter">⚙️</span>
+        <span class="tab-name">Config</span>
+      </button>
     </nav>
 
     <!-- MAIN CONTENT -->
@@ -74,23 +230,25 @@
       <section class="tab-section active" id="tab-a">
         <div class="section-hero" style="--accent-color: #c8f135;">
           <div class="section-hero-text">
-            <p class="section-day">Segunda-feira</p>
+            <p class="section-day" id="dayA">Segunda-feira</p>
             <h2 class="section-title">Peito<br>+ Tríceps</h2>
           </div>
           <div class="section-meta">
             <div class="meta-pill">5 exercícios</div>
-            <div class="meta-pill">~60 min</div>
+            <div class="meta-pill" id="durationA">~60 min</div>
           </div>
         </div>
 
-        <div class="time-bar">
-          <div class="time-seg" style="--c:#4af0b0"><span>10'</span>Aquecimento</div>
-          <div class="time-seg" style="--c:#c8f135"><span>40'</span>Musculação</div>
-          <div class="time-seg" style="--c:#f0a84a"><span>5'</span>Cardio</div>
-          <div class="time-seg" style="--c:#8899aa"><span>5'</span>Alongar</div>
+        <div class="time-bar" id="timeBarA">
+          <div class="time-seg" style="--c:#4af0b0"><span id="tA_warm">10'</span>Aquecimento</div>
+          <div class="time-seg" style="--c:#c8f135"><span id="tA_musc">40'</span>Musculação</div>
+          <div class="time-seg" style="--c:#f0a84a"><span id="tA_card">5'</span>Cardio</div>
+          <div class="time-seg" style="--c:#8899aa"><span id="tA_str">5'</span>Alongar</div>
         </div>
 
         <div class="ex-list">
+
+          <!-- A1: Supino Reto -->
           <div class="ex-card" data-id="a1">
             <div class="ex-card-top">
               <div class="ex-emoji-wrap" style="--ec:#c8f135">🏋️</div>
@@ -101,34 +259,27 @@
               <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
             </div>
             <div class="ex-body">
-              <div class="ex-img-wrap">
-                <div class="ex-gif" data-label="Supino Reto">
-                  <div class="ex-gif-icon">🏋️</div>
-                  <div class="ex-gif-muscles">Peito · Tríceps · Ombro anterior</div>
-                  <div class="ex-gif-diagram">
-                    <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="20" y="60" width="160" height="12" rx="6" fill="#2a2d35"/>
-                      <ellipse cx="100" cy="54" rx="22" ry="16" fill="#c8f135" opacity="0.9"/>
-                      <circle cx="100" cy="38" rx="12" fill="#444"/>
-                      <line x1="100" y1="50" x2="100" y2="68" stroke="#888" stroke-width="3"/>
-                      <line x1="100" y1="52" x2="50" y2="58" stroke="#c8f135" stroke-width="3" stroke-linecap="round"/>
-                      <line x1="100" y1="52" x2="150" y2="58" stroke="#c8f135" stroke-width="3" stroke-linecap="round"/>
-                      <circle cx="42" cy="58" r="8" fill="#444" stroke="#c8f135" stroke-width="2"/>
-                      <circle cx="158" cy="58" r="8" fill="#444" stroke="#c8f135" stroke-width="2"/>
-                      <text x="100" y="100" text-anchor="middle" fill="#7a7f8e" font-size="9" font-family="sans-serif">vista lateral</text>
-                    </svg>
-                  </div>
-                </div>
+              <img class="ex-img-real" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Bench_press_1.jpg/640px-Bench_press_1.jpg" alt="Supino Reto" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+              <div class="ex-img-fallback" style="display:none">
+                <div class="ex-gif-icon">🏋️</div>
+                <div class="ex-gif-muscles">Peito · Tríceps · Ombro anterior</div>
               </div>
+              <div class="muscle-badges" style="--ec-badge:#c8f135">
+                <span class="muscle-badge primary" style="--ec-badge:#c8f135">Peito</span>
+                <span class="muscle-badge primary" style="--ec-badge:#c8f135">Tríceps</span>
+                <span class="muscle-badge secondary">Ombro anterior</span>
+              </div>
+              <a class="ex-video-link" href="https://www.youtube.com/results?search_query=supino+reto+execucao+correto" target="_blank" rel="noopener">▶ Ver vídeo no YouTube</a>
               <div class="ex-instructions">
-                <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> Deite no banco com pés firmes no chão. Segure a barra (ou halteres) com mãos um pouco mais largas que os ombros.</p></div>
+                <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> Deite no banco com pés firmes no chão. Segure a barra com mãos um pouco mais largas que os ombros.</p></div>
                 <div class="ex-step"><span class="step-num">2</span><p><strong>Descida:</strong> Desça o peso lentamente até quase tocar o peito, cotovelos a ~45° do corpo.</p></div>
-                <div class="ex-step"><span class="step-num">3</span><p><strong>Subida:</strong> Empurre de volta contraindo o peito, sem travar os cotovelos no topo.</p></div>
+                <div class="ex-step"><span class="step-num">3</span><p><strong>Subida:</strong> Empurre contraindo o peito, sem travar os cotovelos no topo.</p></div>
                 <div class="ex-tip">💡 Comece com halteres leves para aprender a técnica antes de usar a barra.</div>
               </div>
             </div>
           </div>
 
+          <!-- A2: Crucifixo Inclinado -->
           <div class="ex-card" data-id="a2">
             <div class="ex-card-top">
               <div class="ex-emoji-wrap" style="--ec:#c8f135">🤸</div>
@@ -139,24 +290,16 @@
               <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
             </div>
             <div class="ex-body">
-              <div class="ex-img-wrap">
-                <div class="ex-gif" data-label="Crucifixo Inclinado">
-                  <div class="ex-gif-icon">🤸</div>
-                  <div class="ex-gif-muscles">Peito superior · Ombro anterior</div>
-                  <div class="ex-gif-diagram">
-                    <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="60" y="50" width="80" height="12" rx="6" fill="#2a2d35" transform="rotate(-20,100,56)"/>
-                      <ellipse cx="100" cy="44" rx="20" ry="14" fill="#c8f135" opacity="0.9"/>
-                      <circle cx="100" cy="30" rx="12" fill="#444"/>
-                      <line x1="82" y1="50" x2="40" y2="70" stroke="#c8f135" stroke-width="3" stroke-linecap="round"/>
-                      <line x1="118" y1="50" x2="160" y2="70" stroke="#c8f135" stroke-width="3" stroke-linecap="round"/>
-                      <circle cx="34" cy="73" r="8" fill="#444" stroke="#c8f135" stroke-width="2"/>
-                      <circle cx="166" cy="73" r="8" fill="#444" stroke="#c8f135" stroke-width="2"/>
-                      <text x="100" y="108" text-anchor="middle" fill="#7a7f8e" font-size="9" font-family="sans-serif">banco inclinado 30–45°</text>
-                    </svg>
-                  </div>
-                </div>
+              <img class="ex-img-real" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Incline-dumbbell-fly-1.jpg/640px-Incline-dumbbell-fly-1.jpg" alt="Crucifixo Inclinado" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+              <div class="ex-img-fallback" style="display:none">
+                <div class="ex-gif-icon">🤸</div>
+                <div class="ex-gif-muscles">Peito superior · Ombro anterior</div>
               </div>
+              <div class="muscle-badges">
+                <span class="muscle-badge primary" style="--ec-badge:#c8f135">Peito superior</span>
+                <span class="muscle-badge secondary">Ombro anterior</span>
+              </div>
+              <a class="ex-video-link" href="https://www.youtube.com/results?search_query=crucifixo+inclinado+execucao" target="_blank" rel="noopener">▶ Ver vídeo no YouTube</a>
               <div class="ex-instructions">
                 <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> Banco inclinado a 30–45°. Halteres acima do peito, palmas se olhando.</p></div>
                 <div class="ex-step"><span class="step-num">2</span><p><strong>Abertura:</strong> Abra os braços em arco até sentir o peito esticar, mantendo leve flexão no cotovelo.</p></div>
@@ -166,6 +309,7 @@
             </div>
           </div>
 
+          <!-- A3: Crossover -->
           <div class="ex-card" data-id="a3">
             <div class="ex-card-top">
               <div class="ex-emoji-wrap" style="--ec:#c8f135">🔗</div>
@@ -176,12 +320,16 @@
               <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
             </div>
             <div class="ex-body">
-              <div class="ex-img-wrap">
-                <div class="ex-gif" data-label="Crossover">
-                  <div class="ex-gif-icon">🔗</div>
-                  <div class="ex-gif-muscles">Peito interno · Ombro anterior</div>
-                </div>
+              <img class="ex-img-real" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Cable-crossover-1.jpg/640px-Cable-crossover-1.jpg" alt="Crossover" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+              <div class="ex-img-fallback" style="display:none">
+                <div class="ex-gif-icon">🔗</div>
+                <div class="ex-gif-muscles">Peito interno · Ombro anterior</div>
               </div>
+              <div class="muscle-badges">
+                <span class="muscle-badge primary" style="--ec-badge:#c8f135">Peito interno</span>
+                <span class="muscle-badge secondary">Ombro anterior</span>
+              </div>
+              <a class="ex-video-link" href="https://www.youtube.com/results?search_query=crossover+polia+execucao" target="_blank" rel="noopener">▶ Ver vídeo no YouTube</a>
               <div class="ex-instructions">
                 <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> Entre as duas polias altas, um cabo em cada mão. Dê um passo à frente.</p></div>
                 <div class="ex-step"><span class="step-num">2</span><p><strong>Execução:</strong> Puxe os cabos para baixo e para frente cruzando levemente as mãos no centro.</p></div>
@@ -191,6 +339,7 @@
             </div>
           </div>
 
+          <!-- A4: Tríceps Pulley -->
           <div class="ex-card" data-id="a4">
             <div class="ex-card-top">
               <div class="ex-emoji-wrap" style="--ec:#c8f135">💥</div>
@@ -201,21 +350,27 @@
               <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
             </div>
             <div class="ex-body">
-              <div class="ex-img-wrap">
-                <div class="ex-gif" data-label="Tríceps Pulley">
-                  <div class="ex-gif-icon">💥</div>
-                  <div class="ex-gif-muscles">Tríceps (cabeça longa e lateral)</div>
-                </div>
+              <img class="ex-img-real" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Triceps-pushdown-1.jpg/640px-Triceps-pushdown-1.jpg" alt="Tríceps Pulley" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+              <div class="ex-img-fallback" style="display:none">
+                <div class="ex-gif-icon">💥</div>
+                <div class="ex-gif-muscles">Tríceps (cabeça longa e lateral)</div>
               </div>
+              <div class="muscle-badges">
+                <span class="muscle-badge primary" style="--ec-badge:#c8f135">Tríceps</span>
+                <span class="muscle-badge secondary">Cabeça longa</span>
+                <span class="muscle-badge secondary">Cabeça lateral</span>
+              </div>
+              <a class="ex-video-link" href="https://www.youtube.com/results?search_query=triceps+pulley+execucao+correto" target="_blank" rel="noopener">▶ Ver vídeo no YouTube</a>
               <div class="ex-instructions">
                 <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> De pé na polia alta, cotovelos <strong>colados ao corpo</strong>, segure a corda ou barra.</p></div>
                 <div class="ex-step"><span class="step-num">2</span><p><strong>Execução:</strong> Empurre para baixo até estender os braços completamente. Suba devagar.</p></div>
-                <div class="ex-step"><span class="step-num">3</span><p><strong>Pivô:</strong> Os cotovelos são fixos — eles não devem se mover para frente nem para trás.</p></div>
+                <div class="ex-step"><span class="step-num">3</span><p><strong>Pivô:</strong> Os cotovelos são fixos — não devem se mover para frente nem para trás.</p></div>
                 <div class="ex-tip">💡 Se os cotovelos saem do lugar, reduza o peso — está pesado demais.</div>
               </div>
             </div>
           </div>
 
+          <!-- A5: Tríceps no Banco -->
           <div class="ex-card" data-id="a5">
             <div class="ex-card-top">
               <div class="ex-emoji-wrap" style="--ec:#c8f135">🔽</div>
@@ -226,12 +381,16 @@
               <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
             </div>
             <div class="ex-body">
-              <div class="ex-img-wrap">
-                <div class="ex-gif" data-label="Tríceps no Banco">
-                  <div class="ex-gif-icon">🔽</div>
-                  <div class="ex-gif-muscles">Tríceps · Ombro anterior</div>
-                </div>
+              <img class="ex-img-real" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Bench-dip-1.jpg/640px-Bench-dip-1.jpg" alt="Tríceps no Banco" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+              <div class="ex-img-fallback" style="display:none">
+                <div class="ex-gif-icon">🔽</div>
+                <div class="ex-gif-muscles">Tríceps · Ombro anterior</div>
               </div>
+              <div class="muscle-badges">
+                <span class="muscle-badge primary" style="--ec-badge:#c8f135">Tríceps</span>
+                <span class="muscle-badge secondary">Ombro anterior</span>
+              </div>
+              <a class="ex-video-link" href="https://www.youtube.com/results?search_query=triceps+banco+execucao" target="_blank" rel="noopener">▶ Ver vídeo no YouTube</a>
               <div class="ex-instructions">
                 <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> Mãos apoiadas no banco atrás, pernas estendidas, glúteos fora do banco.</p></div>
                 <div class="ex-step"><span class="step-num">2</span><p><strong>Descida:</strong> Dobre os cotovelos baixando o corpo até ~90° de flexão.</p></div>
@@ -240,8 +399,8 @@
               </div>
             </div>
           </div>
-        </div>
 
+        </div>
         <button class="btn-conclude" data-treino="a" id="btnConcludeA">
           <span class="btn-conclude-icon">✓</span>
           Marcar Treino A como Concluído
@@ -252,23 +411,25 @@
       <section class="tab-section" id="tab-b">
         <div class="section-hero" style="--accent-color: #4af0b0;">
           <div class="section-hero-text">
-            <p class="section-day">Quarta-feira</p>
+            <p class="section-day" id="dayB">Quarta-feira</p>
             <h2 class="section-title">Costas<br>+ Bíceps</h2>
           </div>
           <div class="section-meta">
             <div class="meta-pill">4 exercícios</div>
-            <div class="meta-pill">~60 min</div>
+            <div class="meta-pill" id="durationB">~60 min</div>
           </div>
         </div>
 
         <div class="time-bar">
-          <div class="time-seg" style="--c:#4af0b0"><span>10'</span>Aquecimento</div>
-          <div class="time-seg" style="--c:#4af0b0"><span>40'</span>Musculação</div>
-          <div class="time-seg" style="--c:#f0a84a"><span>5'</span>Cardio</div>
-          <div class="time-seg" style="--c:#8899aa"><span>5'</span>Alongar</div>
+          <div class="time-seg" style="--c:#4af0b0"><span id="tB_warm">10'</span>Aquecimento</div>
+          <div class="time-seg" style="--c:#4af0b0"><span id="tB_musc">40'</span>Musculação</div>
+          <div class="time-seg" style="--c:#f0a84a"><span id="tB_card">5'</span>Cardio</div>
+          <div class="time-seg" style="--c:#8899aa"><span id="tB_str">5'</span>Alongar</div>
         </div>
 
         <div class="ex-list">
+
+          <!-- B1: Puxada Frontal -->
           <div class="ex-card" data-id="b1">
             <div class="ex-card-top">
               <div class="ex-emoji-wrap" style="--ec:#4af0b0">⬆️</div>
@@ -279,23 +440,17 @@
               <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
             </div>
             <div class="ex-body">
-              <div class="ex-img-wrap">
-                <div class="ex-gif" data-label="Puxada Frontal">
-                  <div class="ex-gif-icon">⬆️</div>
-                  <div class="ex-gif-muscles">Grande dorsal · Bíceps · Romboides</div>
-                  <div class="ex-gif-diagram">
-                    <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="10" y="20" width="180" height="8" rx="4" fill="#2a2d35"/>
-                      <ellipse cx="100" cy="55" rx="18" ry="26" fill="#4af0b0" opacity="0.8"/>
-                      <circle cx="100" cy="30" rx="12" fill="#444"/>
-                      <line x1="100" y1="42" x2="100" y2="81" stroke="#888" stroke-width="3"/>
-                      <line x1="100" y1="27" x2="50" y2="24" stroke="#4af0b0" stroke-width="3" stroke-linecap="round"/>
-                      <line x1="100" y1="27" x2="150" y2="24" stroke="#4af0b0" stroke-width="3" stroke-linecap="round"/>
-                      <text x="100" y="108" text-anchor="middle" fill="#7a7f8e" font-size="9" font-family="sans-serif">puxe até o queixo</text>
-                    </svg>
-                  </div>
-                </div>
+              <img class="ex-img-real" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Lat-pulldown-1.jpg/640px-Lat-pulldown-1.jpg" alt="Puxada Frontal" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+              <div class="ex-img-fallback" style="display:none">
+                <div class="ex-gif-icon">⬆️</div>
+                <div class="ex-gif-muscles">Grande dorsal · Bíceps · Romboides</div>
               </div>
+              <div class="muscle-badges">
+                <span class="muscle-badge primary" style="--ec-badge:#4af0b0">Grande dorsal</span>
+                <span class="muscle-badge primary" style="--ec-badge:#4af0b0">Bíceps</span>
+                <span class="muscle-badge secondary">Romboides</span>
+              </div>
+              <a class="ex-video-link" href="https://www.youtube.com/results?search_query=puxada+frontal+execucao+correto" target="_blank" rel="noopener">▶ Ver vídeo no YouTube</a>
               <div class="ex-instructions">
                 <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> Sentado, segure a barra larga com mãos mais largas que os ombros, palmas para fora.</p></div>
                 <div class="ex-step"><span class="step-num">2</span><p><strong>Execução:</strong> Puxe a barra até a altura do queixo abrindo o peito, cotovelos apontando para baixo.</p></div>
@@ -305,6 +460,7 @@
             </div>
           </div>
 
+          <!-- B2: Remada Baixa -->
           <div class="ex-card" data-id="b2">
             <div class="ex-card-top">
               <div class="ex-emoji-wrap" style="--ec:#4af0b0">🔙</div>
@@ -315,21 +471,27 @@
               <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
             </div>
             <div class="ex-body">
-              <div class="ex-img-wrap">
-                <div class="ex-gif" data-label="Remada Baixa">
-                  <div class="ex-gif-icon">🔙</div>
-                  <div class="ex-gif-muscles">Grande dorsal · Romboides · Bíceps</div>
-                </div>
+              <img class="ex-img-real" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Seated-cable-rows-1.jpg/640px-Seated-cable-rows-1.jpg" alt="Remada Baixa" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+              <div class="ex-img-fallback" style="display:none">
+                <div class="ex-gif-icon">🔙</div>
+                <div class="ex-gif-muscles">Grande dorsal · Romboides · Bíceps</div>
               </div>
+              <div class="muscle-badges">
+                <span class="muscle-badge primary" style="--ec-badge:#4af0b0">Grande dorsal</span>
+                <span class="muscle-badge primary" style="--ec-badge:#4af0b0">Romboides</span>
+                <span class="muscle-badge secondary">Bíceps</span>
+              </div>
+              <a class="ex-video-link" href="https://www.youtube.com/results?search_query=remada+baixa+cabo+execucao" target="_blank" rel="noopener">▶ Ver vídeo no YouTube</a>
               <div class="ex-instructions">
-                <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> Sentado, pés no apoio, joelhos levemente flexionados. Costas retas, não curvadas.</p></div>
+                <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> Sentado, pés no apoio, joelhos levemente flexionados. Costas retas.</p></div>
                 <div class="ex-step"><span class="step-num">2</span><p><strong>Execução:</strong> Puxe o cabo em direção ao abdômen, cotovelos rentes ao tronco.</p></div>
                 <div class="ex-step"><span class="step-num">3</span><p><strong>Contração:</strong> Segure 1 segundo contraído, depois volte devagar.</p></div>
-                <div class="ex-tip">💡 Não se jogue para trás para pegar mais carga — isso tira o trabalho das costas e sobrecarrega a lombar.</div>
+                <div class="ex-tip">💡 Não se jogue para trás — isso sobrecarrega a lombar e tira o trabalho das costas.</div>
               </div>
             </div>
           </div>
 
+          <!-- B3: Rosca Direta -->
           <div class="ex-card" data-id="b3">
             <div class="ex-card-top">
               <div class="ex-emoji-wrap" style="--ec:#4af0b0">💪</div>
@@ -340,12 +502,16 @@
               <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
             </div>
             <div class="ex-body">
-              <div class="ex-img-wrap">
-                <div class="ex-gif" data-label="Rosca Direta">
-                  <div class="ex-gif-icon">💪</div>
-                  <div class="ex-gif-muscles">Bíceps · Braquial</div>
-                </div>
+              <img class="ex-img-real" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Barbell-curl-1.jpg/640px-Barbell-curl-1.jpg" alt="Rosca Direta" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+              <div class="ex-img-fallback" style="display:none">
+                <div class="ex-gif-icon">💪</div>
+                <div class="ex-gif-muscles">Bíceps · Braquial</div>
               </div>
+              <div class="muscle-badges">
+                <span class="muscle-badge primary" style="--ec-badge:#4af0b0">Bíceps</span>
+                <span class="muscle-badge secondary">Braquial</span>
+              </div>
+              <a class="ex-video-link" href="https://www.youtube.com/results?search_query=rosca+direta+execucao+correto" target="_blank" rel="noopener">▶ Ver vídeo no YouTube</a>
               <div class="ex-instructions">
                 <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> De pé, costas retas, cotovelos colados ao corpo. Barra ou halteres com palma para cima.</p></div>
                 <div class="ex-step"><span class="step-num">2</span><p><strong>Subida:</strong> Flexione os cotovelos levantando o peso até os ombros.</p></div>
@@ -355,6 +521,7 @@
             </div>
           </div>
 
+          <!-- B4: Rosca Martelo -->
           <div class="ex-card" data-id="b4">
             <div class="ex-card-top">
               <div class="ex-emoji-wrap" style="--ec:#4af0b0">🤜</div>
@@ -365,22 +532,27 @@
               <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
             </div>
             <div class="ex-body">
-              <div class="ex-img-wrap">
-                <div class="ex-gif" data-label="Rosca Martelo">
-                  <div class="ex-gif-icon">🤜</div>
-                  <div class="ex-gif-muscles">Braquial · Bíceps · Braquiorradial</div>
-                </div>
+              <img class="ex-img-real" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Hammer-curl-1.jpg/640px-Hammer-curl-1.jpg" alt="Rosca Martelo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+              <div class="ex-img-fallback" style="display:none">
+                <div class="ex-gif-icon">🤜</div>
+                <div class="ex-gif-muscles">Braquial · Bíceps · Braquiorradial</div>
               </div>
+              <div class="muscle-badges">
+                <span class="muscle-badge primary" style="--ec-badge:#4af0b0">Braquial</span>
+                <span class="muscle-badge primary" style="--ec-badge:#4af0b0">Bíceps</span>
+                <span class="muscle-badge secondary">Braquiorradial</span>
+              </div>
+              <a class="ex-video-link" href="https://www.youtube.com/results?search_query=rosca+martelo+execucao" target="_blank" rel="noopener">▶ Ver vídeo no YouTube</a>
               <div class="ex-instructions">
                 <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> De pé com halteres, palmas voltadas para o corpo (pegada neutra).</p></div>
-                <div class="ex-step"><span class="step-num">2</span><p><strong>Execução:</strong> Suba um halter de cada vez (ou juntos) até o ombro, palma sempre voltada para dentro.</p></div>
+                <div class="ex-step"><span class="step-num">2</span><p><strong>Execução:</strong> Suba um halter de cada vez até o ombro, palma sempre voltada para dentro.</p></div>
                 <div class="ex-step"><span class="step-num">3</span><p><strong>Descida:</strong> Volte devagar sem girar o pulso.</p></div>
                 <div class="ex-tip">💡 Trabalha o braquial (músculo sob o bíceps) dando espessura e volume ao braço.</div>
               </div>
             </div>
           </div>
-        </div>
 
+        </div>
         <button class="btn-conclude" data-treino="b" id="btnConcludeB">
           <span class="btn-conclude-icon">✓</span>
           Marcar Treino B como Concluído
@@ -391,23 +563,25 @@
       <section class="tab-section" id="tab-c">
         <div class="section-hero" style="--accent-color: #f0a84a;">
           <div class="section-hero-text">
-            <p class="section-day">Sexta-feira</p>
+            <p class="section-day" id="dayC">Sexta-feira</p>
             <h2 class="section-title">Pernas<br>+ Ombros</h2>
           </div>
           <div class="section-meta">
             <div class="meta-pill">6 exercícios</div>
-            <div class="meta-pill">~60 min</div>
+            <div class="meta-pill" id="durationC">~60 min</div>
           </div>
         </div>
 
         <div class="time-bar">
-          <div class="time-seg" style="--c:#4af0b0"><span>10'</span>Aquecimento</div>
-          <div class="time-seg" style="--c:#f0a84a"><span>40'</span>Musculação</div>
-          <div class="time-seg" style="--c:#f0a84a"><span>5'</span>Cardio</div>
-          <div class="time-seg" style="--c:#8899aa"><span>5'</span>Alongar</div>
+          <div class="time-seg" style="--c:#4af0b0"><span id="tC_warm">10'</span>Aquecimento</div>
+          <div class="time-seg" style="--c:#f0a84a"><span id="tC_musc">40'</span>Musculação</div>
+          <div class="time-seg" style="--c:#f0a84a"><span id="tC_card">5'</span>Cardio</div>
+          <div class="time-seg" style="--c:#8899aa"><span id="tC_str">5'</span>Alongar</div>
         </div>
 
         <div class="ex-list">
+
+          <!-- C1: Agachamento -->
           <div class="ex-card" data-id="c1">
             <div class="ex-card-top">
               <div class="ex-emoji-wrap" style="--ec:#f0a84a">🦵</div>
@@ -418,32 +592,27 @@
               <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
             </div>
             <div class="ex-body">
-              <div class="ex-img-wrap">
-                <div class="ex-gif" data-label="Agachamento">
-                  <div class="ex-gif-icon">🦵</div>
-                  <div class="ex-gif-muscles">Quadríceps · Glúteo · Isquiotibiais</div>
-                  <div class="ex-gif-diagram">
-                    <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="100" cy="22" rx="12" fill="#444"/>
-                      <rect x="86" y="34" width="28" height="30" rx="6" fill="#f0a84a" opacity="0.9"/>
-                      <line x1="86" y1="64" x2="70" y2="90" stroke="#f0a84a" stroke-width="4" stroke-linecap="round"/>
-                      <line x1="114" y1="64" x2="130" y2="90" stroke="#f0a84a" stroke-width="4" stroke-linecap="round"/>
-                      <line x1="70" y1="90" x2="60" y2="110" stroke="#888" stroke-width="4" stroke-linecap="round"/>
-                      <line x1="130" y1="90" x2="140" y2="110" stroke="#888" stroke-width="4" stroke-linecap="round"/>
-                      <text x="100" y="118" text-anchor="middle" fill="#7a7f8e" font-size="9" font-family="sans-serif">coxas paralelas ao chão</text>
-                    </svg>
-                  </div>
-                </div>
+              <img class="ex-img-real" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Squat_side_small.gif/320px-Squat_side_small.gif" alt="Agachamento" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+              <div class="ex-img-fallback" style="display:none">
+                <div class="ex-gif-icon">🦵</div>
+                <div class="ex-gif-muscles">Quadríceps · Glúteo · Isquiotibiais</div>
               </div>
+              <div class="muscle-badges">
+                <span class="muscle-badge primary" style="--ec-badge:#f0a84a">Quadríceps</span>
+                <span class="muscle-badge primary" style="--ec-badge:#f0a84a">Glúteo</span>
+                <span class="muscle-badge secondary">Isquiotibiais</span>
+              </div>
+              <a class="ex-video-link" href="https://www.youtube.com/results?search_query=agachamento+livre+execucao+correto" target="_blank" rel="noopener">▶ Ver vídeo no YouTube</a>
               <div class="ex-instructions">
                 <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> Pés na largura dos ombros, pontas levemente abertas. Barra no Smith machine ou livre.</p></div>
                 <div class="ex-step"><span class="step-num">2</span><p><strong>Descida:</strong> Empurre o quadril para baixo e para trás como se fosse sentar. Desça até as coxas ficarem paralelas ao chão.</p></div>
                 <div class="ex-step"><span class="step-num">3</span><p><strong>Subida:</strong> Empurre o chão com os pés, mantendo o joelho alinhado com os pés.</p></div>
-                <div class="ex-tip">💡 Nas primeiras semanas, pratique sem peso para fixar o padrão de movimento. É o exercício mais importante para as pernas.</div>
+                <div class="ex-tip">💡 Nas primeiras semanas, pratique sem peso para fixar o padrão. É o exercício mais importante para pernas.</div>
               </div>
             </div>
           </div>
 
+          <!-- C2: Leg Press -->
           <div class="ex-card" data-id="c2">
             <div class="ex-card-top">
               <div class="ex-emoji-wrap" style="--ec:#f0a84a">🚀</div>
@@ -454,12 +623,17 @@
               <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
             </div>
             <div class="ex-body">
-              <div class="ex-img-wrap">
-                <div class="ex-gif" data-label="Leg Press">
-                  <div class="ex-gif-icon">🚀</div>
-                  <div class="ex-gif-muscles">Quadríceps · Glúteo · Isquiotibiais</div>
-                </div>
+              <img class="ex-img-real" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Leg-press-1.jpg/640px-Leg-press-1.jpg" alt="Leg Press" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+              <div class="ex-img-fallback" style="display:none">
+                <div class="ex-gif-icon">🚀</div>
+                <div class="ex-gif-muscles">Quadríceps · Glúteo · Isquiotibiais</div>
               </div>
+              <div class="muscle-badges">
+                <span class="muscle-badge primary" style="--ec-badge:#f0a84a">Quadríceps</span>
+                <span class="muscle-badge primary" style="--ec-badge:#f0a84a">Glúteo</span>
+                <span class="muscle-badge secondary">Isquiotibiais</span>
+              </div>
+              <a class="ex-video-link" href="https://www.youtube.com/results?search_query=leg+press+45+execucao+correto" target="_blank" rel="noopener">▶ Ver vídeo no YouTube</a>
               <div class="ex-instructions">
                 <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> Sentado no aparelho, pés na plataforma na largura do quadril, joelhos a ~90°.</p></div>
                 <div class="ex-step"><span class="step-num">2</span><p><strong>Execução:</strong> Empurre a plataforma até quase estender as pernas — não trave o joelho.</p></div>
@@ -469,6 +643,7 @@
             </div>
           </div>
 
+          <!-- C3: Cadeira Extensora -->
           <div class="ex-card" data-id="c3">
             <div class="ex-card-top">
               <div class="ex-emoji-wrap" style="--ec:#f0a84a">🎯</div>
@@ -479,12 +654,15 @@
               <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
             </div>
             <div class="ex-body">
-              <div class="ex-img-wrap">
-                <div class="ex-gif" data-label="Cadeira Extensora">
-                  <div class="ex-gif-icon">🎯</div>
-                  <div class="ex-gif-muscles">Quadríceps (foco total)</div>
-                </div>
+              <img class="ex-img-real" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Leg-extensions-1.jpg/640px-Leg-extensions-1.jpg" alt="Cadeira Extensora" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+              <div class="ex-img-fallback" style="display:none">
+                <div class="ex-gif-icon">🎯</div>
+                <div class="ex-gif-muscles">Quadríceps (foco total)</div>
               </div>
+              <div class="muscle-badges">
+                <span class="muscle-badge primary" style="--ec-badge:#f0a84a">Quadríceps</span>
+              </div>
+              <a class="ex-video-link" href="https://www.youtube.com/results?search_query=cadeira+extensora+execucao" target="_blank" rel="noopener">▶ Ver vídeo no YouTube</a>
               <div class="ex-instructions">
                 <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> Sentado, joelhos no eixo da máquina, tornozelo atrás do apoio acolchoado.</p></div>
                 <div class="ex-step"><span class="step-num">2</span><p><strong>Execução:</strong> Estenda as pernas até quase travar, segure 1 segundo contraído.</p></div>
@@ -494,6 +672,7 @@
             </div>
           </div>
 
+          <!-- C4: Desenvolvimento -->
           <div class="ex-card" data-id="c4">
             <div class="ex-card-top">
               <div class="ex-emoji-wrap" style="--ec:#f0a84a">⬆️</div>
@@ -504,12 +683,17 @@
               <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
             </div>
             <div class="ex-body">
-              <div class="ex-img-wrap">
-                <div class="ex-gif" data-label="Desenvolvimento">
-                  <div class="ex-gif-icon">⬆️</div>
-                  <div class="ex-gif-muscles">Deltóide anterior e lateral · Trapézio</div>
-                </div>
+              <img class="ex-img-real" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Dumbbell-shoulder-press-1.jpg/640px-Dumbbell-shoulder-press-1.jpg" alt="Desenvolvimento Halteres" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+              <div class="ex-img-fallback" style="display:none">
+                <div class="ex-gif-icon">⬆️</div>
+                <div class="ex-gif-muscles">Deltóide anterior e lateral · Trapézio</div>
               </div>
+              <div class="muscle-badges">
+                <span class="muscle-badge primary" style="--ec-badge:#f0a84a">Deltóide</span>
+                <span class="muscle-badge secondary">Trapézio</span>
+                <span class="muscle-badge secondary">Tríceps</span>
+              </div>
+              <a class="ex-video-link" href="https://www.youtube.com/results?search_query=desenvolvimento+halteres+execucao" target="_blank" rel="noopener">▶ Ver vídeo no YouTube</a>
               <div class="ex-instructions">
                 <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> Sentado com encosto, halteres na altura dos ombros, cotovelos a ~90° para os lados.</p></div>
                 <div class="ex-step"><span class="step-num">2</span><p><strong>Subida:</strong> Empurre os halteres para cima até quase estender os braços.</p></div>
@@ -519,6 +703,7 @@
             </div>
           </div>
 
+          <!-- C5: Elevação Lateral -->
           <div class="ex-card" data-id="c5">
             <div class="ex-card-top">
               <div class="ex-emoji-wrap" style="--ec:#f0a84a">↔️</div>
@@ -529,12 +714,16 @@
               <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
             </div>
             <div class="ex-body">
-              <div class="ex-img-wrap">
-                <div class="ex-gif" data-label="Elevação Lateral">
-                  <div class="ex-gif-icon">↔️</div>
-                  <div class="ex-gif-muscles">Deltóide lateral (ombro "redondo")</div>
-                </div>
+              <img class="ex-img-real" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Lateral-raise-1.jpg/640px-Lateral-raise-1.jpg" alt="Elevação Lateral" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+              <div class="ex-img-fallback" style="display:none">
+                <div class="ex-gif-icon">↔️</div>
+                <div class="ex-gif-muscles">Deltóide lateral</div>
               </div>
+              <div class="muscle-badges">
+                <span class="muscle-badge primary" style="--ec-badge:#f0a84a">Deltóide lateral</span>
+                <span class="muscle-badge secondary">Trapézio</span>
+              </div>
+              <a class="ex-video-link" href="https://www.youtube.com/results?search_query=elevacao+lateral+execucao+correto" target="_blank" rel="noopener">▶ Ver vídeo no YouTube</a>
               <div class="ex-instructions">
                 <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> De pé, halteres ao lado do corpo, leve flexão no cotovelo.</p></div>
                 <div class="ex-step"><span class="step-num">2</span><p><strong>Execução:</strong> Eleve os braços para os lados até a altura dos ombros — não acima.</p></div>
@@ -544,6 +733,7 @@
             </div>
           </div>
 
+          <!-- C6: Panturrilha -->
           <div class="ex-card" data-id="c6">
             <div class="ex-card-top">
               <div class="ex-emoji-wrap" style="--ec:#f0a84a">🦶</div>
@@ -554,12 +744,16 @@
               <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
             </div>
             <div class="ex-body">
-              <div class="ex-img-wrap">
-                <div class="ex-gif" data-label="Panturrilha">
-                  <div class="ex-gif-icon">🦶</div>
-                  <div class="ex-gif-muscles">Gastrocnêmio · Sóleo</div>
-                </div>
+              <img class="ex-img-real" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Calf-raise-1.jpg/640px-Calf-raise-1.jpg" alt="Elevação de Panturrilha" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+              <div class="ex-img-fallback" style="display:none">
+                <div class="ex-gif-icon">🦶</div>
+                <div class="ex-gif-muscles">Gastrocnêmio · Sóleo</div>
               </div>
+              <div class="muscle-badges">
+                <span class="muscle-badge primary" style="--ec-badge:#f0a84a">Gastrocnêmio</span>
+                <span class="muscle-badge secondary">Sóleo</span>
+              </div>
+              <a class="ex-video-link" href="https://www.youtube.com/results?search_query=elevacao+panturrilha+execucao" target="_blank" rel="noopener">▶ Ver vídeo no YouTube</a>
               <div class="ex-instructions">
                 <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> Pé em degrau ou aparelho, ponta dos pés apoiada, calcanhar no ar.</p></div>
                 <div class="ex-step"><span class="step-num">2</span><p><strong>Subida:</strong> Suba na ponta dos pés o máximo possível, segure 1 segundo no topo.</p></div>
@@ -568,8 +762,8 @@
               </div>
             </div>
           </div>
-        </div>
 
+        </div>
         <button class="btn-conclude" data-treino="c" id="btnConcludeC">
           <span class="btn-conclude-icon">✓</span>
           Marcar Treino C como Concluído
@@ -584,80 +778,185 @@
             <h2 class="section-title">Dicas<br>Essenciais</h2>
           </div>
         </div>
-
         <div class="tips-grid">
-          <div class="tip-card">
-            <div class="tip-icon">😴</div>
-            <h3 class="tip-title">Sono</h3>
-            <p class="tip-body">Durma 7–9h por noite. O músculo cresce durante o sono — não durante o treino.</p>
-          </div>
-          <div class="tip-card">
-            <div class="tip-icon">🥩</div>
-            <h3 class="tip-title">Proteína</h3>
-            <p class="tip-body">Consuma 1,6–2g por kg de peso. Ovos, frango, carne, atum e whey são ótimas fontes.</p>
-          </div>
-          <div class="tip-card">
-            <div class="tip-icon">💧</div>
-            <h3 class="tip-title">Hidratação</h3>
-            <p class="tip-body">Beba 2–3 litros de água por dia. Mais ainda nos dias de treino e no calor.</p>
-          </div>
-          <div class="tip-card">
-            <div class="tip-icon">📅</div>
-            <h3 class="tip-title">Descanso</h3>
-            <p class="tip-body">Deixe ao menos 1 dia de intervalo entre os treinos. Seg/Qua/Sex é o modelo ideal.</p>
-          </div>
-          <div class="tip-card">
-            <div class="tip-icon">📈</div>
-            <h3 class="tip-title">Progressão</h3>
-            <p class="tip-body">Tente aumentar 1–2kg ou 1 repetição por semana. Pequenas evoluções constantes fazem toda a diferença.</p>
-          </div>
-          <div class="tip-card">
-            <div class="tip-icon">🔥</div>
-            <h3 class="tip-title">Aquecimento</h3>
-            <p class="tip-body">Sempre 10 min de aquecimento (esteira, bike ou mobilidade) antes do peso. Previne lesões.</p>
-          </div>
-          <div class="tip-card">
-            <div class="tip-icon">⏱️</div>
-            <h3 class="tip-title">Descanso entre séries</h3>
-            <p class="tip-body">60–90 segundos para exercícios de musculação. Respeitar o descanso é tão importante quanto o exercício.</p>
-          </div>
-          <div class="tip-card">
-            <div class="tip-icon">🧠</div>
-            <h3 class="tip-title">Conexão mental</h3>
-            <p class="tip-body">Pense no músculo que você está trabalhando durante o exercício. Isso aumenta a ativação muscular comprovadamente.</p>
-          </div>
+          <div class="tip-card"><div class="tip-icon">😴</div><h3 class="tip-title">Sono</h3><p class="tip-body">Durma 7–9h por noite. O músculo cresce durante o sono — não durante o treino.</p></div>
+          <div class="tip-card"><div class="tip-icon">🥩</div><h3 class="tip-title">Proteína</h3><p class="tip-body">Consuma 1,6–2g por kg de peso. Ovos, frango, carne, atum e whey são ótimas fontes.</p></div>
+          <div class="tip-card"><div class="tip-icon">💧</div><h3 class="tip-title">Hidratação</h3><p class="tip-body">Beba 2–3 litros de água por dia. Mais ainda nos dias de treino e no calor.</p></div>
+          <div class="tip-card"><div class="tip-icon">📅</div><h3 class="tip-title">Descanso</h3><p class="tip-body">Deixe ao menos 1 dia de intervalo entre os treinos. Seg/Qua/Sex é o modelo ideal.</p></div>
+          <div class="tip-card"><div class="tip-icon">📈</div><h3 class="tip-title">Progressão</h3><p class="tip-body">Tente aumentar 1–2kg ou 1 repetição por semana. Pequenas evoluções constantes fazem toda a diferença.</p></div>
+          <div class="tip-card"><div class="tip-icon">🔥</div><h3 class="tip-title">Aquecimento</h3><p class="tip-body">Sempre 10 min de aquecimento (esteira, bike ou mobilidade) antes do peso. Previne lesões.</p></div>
+          <div class="tip-card"><div class="tip-icon">⏱️</div><h3 class="tip-title">Descanso entre séries</h3><p class="tip-body">60–90 segundos para exercícios de musculação. Respeitar o descanso é tão importante quanto o exercício.</p></div>
+          <div class="tip-card"><div class="tip-icon">🧠</div><h3 class="tip-title">Conexão mental</h3><p class="tip-body">Pense no músculo que você está trabalhando durante o exercício. Isso aumenta a ativação muscular comprovadamente.</p></div>
         </div>
-
         <div class="prog-section">
           <h3 class="prog-title">Progressão por semanas</h3>
           <div class="prog-item">
-            <div class="prog-row-label">
-              <span>Semana 1–2</span><span class="prog-tag">Técnica</span>
-            </div>
+            <div class="prog-row-label"><span>Semana 1–2</span><span class="prog-tag">Técnica</span></div>
             <div class="prog-track"><div class="prog-fill" style="width:30%; background:#4af0b0"></div></div>
             <p class="prog-desc">Aprenda o movimento correto de cada exercício com carga leve.</p>
           </div>
           <div class="prog-item">
-            <div class="prog-row-label">
-              <span>Semana 3–4</span><span class="prog-tag">Adaptação</span>
-            </div>
+            <div class="prog-row-label"><span>Semana 3–4</span><span class="prog-tag">Adaptação</span></div>
             <div class="prog-track"><div class="prog-fill" style="width:55%"></div></div>
             <p class="prog-desc">Aumente a carga gradualmente mantendo a técnica impecável.</p>
           </div>
           <div class="prog-item">
-            <div class="prog-row-label">
-              <span>Semana 5–8</span><span class="prog-tag">Força</span>
-            </div>
+            <div class="prog-row-label"><span>Semana 5–8</span><span class="prog-tag">Força</span></div>
             <div class="prog-track"><div class="prog-fill" style="width:78%"></div></div>
             <p class="prog-desc">Carga moderada. Adicione uma 4ª série nos exercícios principais.</p>
           </div>
           <div class="prog-item">
-            <div class="prog-row-label">
-              <span>Mês 3+</span><span class="prog-tag" style="background:#f0a84a22; color:#f0a84a;">Crescimento</span>
-            </div>
+            <div class="prog-row-label"><span>Mês 3+</span><span class="prog-tag" style="background:#f0a84a22; color:#f0a84a;">Crescimento</span></div>
             <div class="prog-track"><div class="prog-fill" style="width:100%; background:#f0a84a"></div></div>
             <p class="prog-desc">Você estará pronto para um treino intermediário com mais volume.</p>
           </div>
+        </div>
+      </section>
+
+      <!-- ===== CONFIG ===== -->
+      <section class="tab-section" id="tab-config">
+        <div class="section-hero" style="--accent-color: #a78bfa;">
+          <div class="section-hero-text">
+            <p class="section-day">Personalize</p>
+            <h2 class="section-title" style="color:#a78bfa">Config<br>urações</h2>
+          </div>
+        </div>
+
+        <div class="config-section">
+
+          <!-- DIAS -->
+          <div class="config-card">
+            <h3>📅 Dias de Treino</h3>
+            <div class="config-row">
+              <div class="config-label">
+                Treino A — Peito + Tríceps
+                <div class="config-sub">Qual dia da semana?</div>
+              </div>
+              <select class="config-select" id="cfg_dayA">
+                <option value="Segunda-feira">Segunda</option>
+                <option value="Terça-feira">Terça</option>
+                <option value="Quarta-feira">Quarta</option>
+                <option value="Quinta-feira">Quinta</option>
+                <option value="Sexta-feira">Sexta</option>
+                <option value="Sábado">Sábado</option>
+                <option value="Domingo">Domingo</option>
+              </select>
+            </div>
+            <div class="config-row">
+              <div class="config-label">
+                Treino B — Costas + Bíceps
+                <div class="config-sub">Qual dia da semana?</div>
+              </div>
+              <select class="config-select" id="cfg_dayB">
+                <option value="Segunda-feira">Segunda</option>
+                <option value="Terça-feira">Terça</option>
+                <option value="Quarta-feira" selected>Quarta</option>
+                <option value="Quinta-feira">Quinta</option>
+                <option value="Sexta-feira">Sexta</option>
+                <option value="Sábado">Sábado</option>
+                <option value="Domingo">Domingo</option>
+              </select>
+            </div>
+            <div class="config-row">
+              <div class="config-label">
+                Treino C — Pernas + Ombros
+                <div class="config-sub">Qual dia da semana?</div>
+              </div>
+              <select class="config-select" id="cfg_dayC">
+                <option value="Segunda-feira">Segunda</option>
+                <option value="Terça-feira">Terça</option>
+                <option value="Quarta-feira">Quarta</option>
+                <option value="Quinta-feira">Quinta</option>
+                <option value="Sexta-feira" selected>Sexta</option>
+                <option value="Sábado">Sábado</option>
+                <option value="Domingo">Domingo</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- TEMPO TREINO A -->
+          <div class="config-card">
+            <h3>⏱️ Tempo — Treino A (Peito)</h3>
+            <div class="time-inputs">
+              <div class="time-input-group">
+                <label>Aquecimento</label>
+                <input type="number" id="cfg_tA_warm" value="10" min="0" max="60"/>
+                <span>minutos</span>
+              </div>
+              <div class="time-input-group">
+                <label>Musculação</label>
+                <input type="number" id="cfg_tA_musc" value="40" min="0" max="120"/>
+                <span>minutos</span>
+              </div>
+              <div class="time-input-group">
+                <label>Cardio</label>
+                <input type="number" id="cfg_tA_card" value="5" min="0" max="60"/>
+                <span>minutos</span>
+              </div>
+              <div class="time-input-group">
+                <label>Alongar</label>
+                <input type="number" id="cfg_tA_str" value="5" min="0" max="30"/>
+                <span>minutos</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- TEMPO TREINO B -->
+          <div class="config-card">
+            <h3>⏱️ Tempo — Treino B (Costas)</h3>
+            <div class="time-inputs">
+              <div class="time-input-group">
+                <label>Aquecimento</label>
+                <input type="number" id="cfg_tB_warm" value="10" min="0" max="60"/>
+                <span>minutos</span>
+              </div>
+              <div class="time-input-group">
+                <label>Musculação</label>
+                <input type="number" id="cfg_tB_musc" value="40" min="0" max="120"/>
+                <span>minutos</span>
+              </div>
+              <div class="time-input-group">
+                <label>Cardio</label>
+                <input type="number" id="cfg_tB_card" value="5" min="0" max="60"/>
+                <span>minutos</span>
+              </div>
+              <div class="time-input-group">
+                <label>Alongar</label>
+                <input type="number" id="cfg_tB_str" value="5" min="0" max="30"/>
+                <span>minutos</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- TEMPO TREINO C -->
+          <div class="config-card">
+            <h3>⏱️ Tempo — Treino C (Pernas)</h3>
+            <div class="time-inputs">
+              <div class="time-input-group">
+                <label>Aquecimento</label>
+                <input type="number" id="cfg_tC_warm" value="10" min="0" max="60"/>
+                <span>minutos</span>
+              </div>
+              <div class="time-input-group">
+                <label>Musculação</label>
+                <input type="number" id="cfg_tC_musc" value="40" min="0" max="120"/>
+                <span>minutos</span>
+              </div>
+              <div class="time-input-group">
+                <label>Cardio</label>
+                <input type="number" id="cfg_tC_card" value="5" min="0" max="60"/>
+                <span>minutos</span>
+              </div>
+              <div class="time-input-group">
+                <label>Alongar</label>
+                <input type="number" id="cfg_tC_str" value="5" min="0" max="30"/>
+                <span>minutos</span>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-save-config" id="btnSaveConfig">💾 Salvar Configurações</button>
+
         </div>
       </section>
 
@@ -667,7 +966,7 @@
   <!-- TOAST -->
   <div class="toast" id="toast"></div>
 
-  <!-- MODAL CONCLUSÃO -->
+  <!-- MODAL -->
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal">
       <div class="modal-emoji" id="modalEmoji">🎉</div>
@@ -678,5 +977,87 @@
   </div>
 
   <script src="script.js"></script>
+  <script>
+  // ── CONFIG LOGIC (inline para não precisar alterar o script.js) ──────────
+  const CFG_KEY = 'meutreino_config_v1';
+
+  const DAY_TO_INDEX = {
+    'Domingo': 0, 'Segunda-feira': 1, 'Terça-feira': 2,
+    'Quarta-feira': 3, 'Quinta-feira': 4, 'Sexta-feira': 5, 'Sábado': 6
+  };
+
+  function loadConfig() {
+    try {
+      const raw = localStorage.getItem(CFG_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch(e) { return null; }
+  }
+
+  function saveConfig(cfg) {
+    try { localStorage.setItem(CFG_KEY, JSON.stringify(cfg)); } catch(e) {}
+  }
+
+  function applyConfig(cfg) {
+    if (!cfg) return;
+
+    // Days
+    if (cfg.dayA) document.getElementById('dayA').textContent = cfg.dayA;
+    if (cfg.dayB) document.getElementById('dayB').textContent = cfg.dayB;
+    if (cfg.dayC) document.getElementById('dayC').textContent = cfg.dayC;
+
+    // Time bars
+    const timeFields = ['warm','musc','card','str'];
+    ['A','B','C'].forEach(t => {
+      let total = 0;
+      timeFields.forEach(f => {
+        const val = cfg[`t${t}_${f}`];
+        if (val !== undefined) {
+          const el = document.getElementById(`t${t}_${f}`);
+          if (el) { el.textContent = val + "'"; total += parseInt(val)||0; }
+        }
+      });
+      const dur = document.getElementById('duration' + t);
+      if (dur && total > 0) dur.textContent = '~' + total + ' min';
+    });
+
+    // Set selects
+    if (cfg.dayA) document.getElementById('cfg_dayA').value = cfg.dayA;
+    if (cfg.dayB) document.getElementById('cfg_dayB').value = cfg.dayB;
+    if (cfg.dayC) document.getElementById('cfg_dayC').value = cfg.dayC;
+    ['A','B','C'].forEach(t => {
+      timeFields.forEach(f => {
+        const val = cfg[`t${t}_${f}`];
+        const el = document.getElementById(`cfg_t${t}_${f}`);
+        if (val !== undefined && el) el.value = val;
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Apply saved config after main script runs
+    setTimeout(() => {
+      const cfg = loadConfig();
+      if (cfg) applyConfig(cfg);
+
+      document.getElementById('btnSaveConfig').addEventListener('click', () => {
+        const cfg = {
+          dayA: document.getElementById('cfg_dayA').value,
+          dayB: document.getElementById('cfg_dayB').value,
+          dayC: document.getElementById('cfg_dayC').value,
+        };
+        ['A','B','C'].forEach(t => {
+          ['warm','musc','card','str'].forEach(f => {
+            cfg[`t${t}_${f}`] = document.getElementById(`cfg_t${t}_${f}`).value;
+          });
+        });
+        saveConfig(cfg);
+        applyConfig(cfg);
+        // Update splash sub if needed
+        showToast('✅ Configurações salvas!');
+        switchTab('a');
+      });
+    }, 1600);
+  });
+  </script>
 </body>
 </html>
