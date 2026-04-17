@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="theme-color" content="#0b0c0f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Meu Treino</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- SPLASH -->
+  <div id="splash">
+    <div class="splash-inner">
+      <div class="splash-logo">💪</div>
+      <h1 class="splash-title">MEU<br><span>TREINO</span></h1>
+      <p class="splash-sub">Ganho de massa · Iniciante · 3×/semana</p>
+    </div>
+  </div>
+
+  <!-- APP -->
+  <div id="app" class="hidden">
+
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="header-inner">
+        <div class="header-brand">
+          <span class="header-icon">💪</span>
+          <span class="header-title">MEU TREINO</span>
+        </div>
+        <button class="btn-reset" id="btnReset" title="Resetar semana">↺</button>
+      </div>
+
+      <!-- WEEKLY STRIP -->
+      <div class="week-strip" id="weekStrip"></div>
+
+      <!-- PROGRESS BAR -->
+      <div class="week-progress">
+        <div class="week-progress-bar" id="weekProgressBar"></div>
+      </div>
+      <div class="week-label" id="weekLabel">0 de 3 treinos concluídos esta semana</div>
+    </header>
+
+    <!-- NAV TABS -->
+    <nav class="tab-nav" id="tabNav">
+      <button class="tab-btn active" data-tab="a">
+        <span class="tab-letter">A</span>
+        <span class="tab-name">Peito</span>
+        <span class="tab-check hidden" id="checkA">✓</span>
+      </button>
+      <button class="tab-btn" data-tab="b">
+        <span class="tab-letter">B</span>
+        <span class="tab-name">Costas</span>
+        <span class="tab-check hidden" id="checkB">✓</span>
+      </button>
+      <button class="tab-btn" data-tab="c">
+        <span class="tab-letter">C</span>
+        <span class="tab-name">Pernas</span>
+        <span class="tab-check hidden" id="checkC">✓</span>
+      </button>
+      <button class="tab-btn" data-tab="tips">
+        <span class="tab-letter">💡</span>
+        <span class="tab-name">Dicas</span>
+      </button>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+      <!-- ===== TREINO A ===== -->
+      <section class="tab-section active" id="tab-a">
+        <div class="section-hero" style="--accent-color: #c8f135;">
+          <div class="section-hero-text">
+            <p class="section-day">Segunda-feira</p>
+            <h2 class="section-title">Peito<br>+ Tríceps</h2>
+          </div>
+          <div class="section-meta">
+            <div class="meta-pill">5 exercícios</div>
+            <div class="meta-pill">~60 min</div>
+          </div>
+        </div>
+
+        <div class="time-bar">
+          <div class="time-seg" style="--c:#4af0b0"><span>10'</span>Aquecimento</div>
+          <div class="time-seg" style="--c:#c8f135"><span>40'</span>Musculação</div>
+          <div class="time-seg" style="--c:#f0a84a"><span>5'</span>Cardio</div>
+          <div class="time-seg" style="--c:#8899aa"><span>5'</span>Alongar</div>
+        </div>
+
+        <div class="ex-list">
+          <div class="ex-card" data-id="a1">
+            <div class="ex-card-top">
+              <div class="ex-emoji-wrap" style="--ec:#c8f135">🏋️</div>
+              <div class="ex-info">
+                <h3 class="ex-name">Supino Reto</h3>
+                <p class="ex-sets">3 séries · 10–12 repetições · Descanso: 90s</p>
+              </div>
+              <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
+            </div>
+            <div class="ex-body">
+              <div class="ex-img-wrap">
+                <div class="ex-gif" data-label="Supino Reto">
+                  <div class="ex-gif-icon">🏋️</div>
+                  <div class="ex-gif-muscles">Peito · Tríceps · Ombro anterior</div>
+                  <div class="ex-gif-diagram">
+                    <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="20" y="60" width="160" height="12" rx="6" fill="#2a2d35"/>
+                      <ellipse cx="100" cy="54" rx="22" ry="16" fill="#c8f135" opacity="0.9"/>
+                      <circle cx="100" cy="38" rx="12" fill="#444"/>
+                      <line x1="100" y1="50" x2="100" y2="68" stroke="#888" stroke-width="3"/>
+                      <line x1="100" y1="52" x2="50" y2="58" stroke="#c8f135" stroke-width="3" stroke-linecap="round"/>
+                      <line x1="100" y1="52" x2="150" y2="58" stroke="#c8f135" stroke-width="3" stroke-linecap="round"/>
+                      <circle cx="42" cy="58" r="8" fill="#444" stroke="#c8f135" stroke-width="2"/>
+                      <circle cx="158" cy="58" r="8" fill="#444" stroke="#c8f135" stroke-width="2"/>
+                      <text x="100" y="100" text-anchor="middle" fill="#7a7f8e" font-size="9" font-family="sans-serif">vista lateral</text>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="ex-instructions">
+                <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> Deite no banco com pés firmes no chão. Segure a barra (ou halteres) com mãos um pouco mais largas que os ombros.</p></div>
+                <div class="ex-step"><span class="step-num">2</span><p><strong>Descida:</strong> Desça o peso lentamente até quase tocar o peito, cotovelos a ~45° do corpo.</p></div>
+                <div class="ex-step"><span class="step-num">3</span><p><strong>Subida:</strong> Empurre de volta contraindo o peito, sem travar os cotovelos no topo.</p></div>
+                <div class="ex-tip">💡 Comece com halteres leves para aprender a técnica antes de usar a barra.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ex-card" data-id="a2">
+            <div class="ex-card-top">
+              <div class="ex-emoji-wrap" style="--ec:#c8f135">🤸</div>
+              <div class="ex-info">
+                <h3 class="ex-name">Crucifixo Inclinado</h3>
+                <p class="ex-sets">3 séries · 12 repetições · Descanso: 60s</p>
+              </div>
+              <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
+            </div>
+            <div class="ex-body">
+              <div class="ex-img-wrap">
+                <div class="ex-gif" data-label="Crucifixo Inclinado">
+                  <div class="ex-gif-icon">🤸</div>
+                  <div class="ex-gif-muscles">Peito superior · Ombro anterior</div>
+                  <div class="ex-gif-diagram">
+                    <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="60" y="50" width="80" height="12" rx="6" fill="#2a2d35" transform="rotate(-20,100,56)"/>
+                      <ellipse cx="100" cy="44" rx="20" ry="14" fill="#c8f135" opacity="0.9"/>
+                      <circle cx="100" cy="30" rx="12" fill="#444"/>
+                      <line x1="82" y1="50" x2="40" y2="70" stroke="#c8f135" stroke-width="3" stroke-linecap="round"/>
+                      <line x1="118" y1="50" x2="160" y2="70" stroke="#c8f135" stroke-width="3" stroke-linecap="round"/>
+                      <circle cx="34" cy="73" r="8" fill="#444" stroke="#c8f135" stroke-width="2"/>
+                      <circle cx="166" cy="73" r="8" fill="#444" stroke="#c8f135" stroke-width="2"/>
+                      <text x="100" y="108" text-anchor="middle" fill="#7a7f8e" font-size="9" font-family="sans-serif">banco inclinado 30–45°</text>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="ex-instructions">
+                <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> Banco inclinado a 30–45°. Halteres acima do peito, palmas se olhando.</p></div>
+                <div class="ex-step"><span class="step-num">2</span><p><strong>Abertura:</strong> Abra os braços em arco até sentir o peito esticar, mantendo leve flexão no cotovelo.</p></div>
+                <div class="ex-step"><span class="step-num">3</span><p><strong>Fechamento:</strong> Feche contraindo o peito, como se fosse abraçar uma árvore grande.</p></div>
+                <div class="ex-tip">💡 Não trave os cotovelos — mantenha sempre a leve flexão durante todo o movimento.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ex-card" data-id="a3">
+            <div class="ex-card-top">
+              <div class="ex-emoji-wrap" style="--ec:#c8f135">🔗</div>
+              <div class="ex-info">
+                <h3 class="ex-name">Crossover na Polia</h3>
+                <p class="ex-sets">3 séries · 12–15 repetições · Descanso: 60s</p>
+              </div>
+              <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
+            </div>
+            <div class="ex-body">
+              <div class="ex-img-wrap">
+                <div class="ex-gif" data-label="Crossover">
+                  <div class="ex-gif-icon">🔗</div>
+                  <div class="ex-gif-muscles">Peito interno · Ombro anterior</div>
+                </div>
+              </div>
+              <div class="ex-instructions">
+                <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> Entre as duas polias altas, um cabo em cada mão. Dê um passo à frente.</p></div>
+                <div class="ex-step"><span class="step-num">2</span><p><strong>Execução:</strong> Puxe os cabos para baixo e para frente cruzando levemente as mãos no centro.</p></div>
+                <div class="ex-step"><span class="step-num">3</span><p><strong>Retorno:</strong> Volte de forma controlada sentindo o peito esticar na abertura.</p></div>
+                <div class="ex-tip">💡 Ótimo para finalizar o peito — foque na contração no centro do movimento.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ex-card" data-id="a4">
+            <div class="ex-card-top">
+              <div class="ex-emoji-wrap" style="--ec:#c8f135">💥</div>
+              <div class="ex-info">
+                <h3 class="ex-name">Tríceps Pulley</h3>
+                <p class="ex-sets">3 séries · 12–15 repetições · Descanso: 60s</p>
+              </div>
+              <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
+            </div>
+            <div class="ex-body">
+              <div class="ex-img-wrap">
+                <div class="ex-gif" data-label="Tríceps Pulley">
+                  <div class="ex-gif-icon">💥</div>
+                  <div class="ex-gif-muscles">Tríceps (cabeça longa e lateral)</div>
+                </div>
+              </div>
+              <div class="ex-instructions">
+                <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> De pé na polia alta, cotovelos <strong>colados ao corpo</strong>, segure a corda ou barra.</p></div>
+                <div class="ex-step"><span class="step-num">2</span><p><strong>Execução:</strong> Empurre para baixo até estender os braços completamente. Suba devagar.</p></div>
+                <div class="ex-step"><span class="step-num">3</span><p><strong>Pivô:</strong> Os cotovelos são fixos — eles não devem se mover para frente nem para trás.</p></div>
+                <div class="ex-tip">💡 Se os cotovelos saem do lugar, reduza o peso — está pesado demais.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ex-card" data-id="a5">
+            <div class="ex-card-top">
+              <div class="ex-emoji-wrap" style="--ec:#c8f135">🔽</div>
+              <div class="ex-info">
+                <h3 class="ex-name">Tríceps no Banco</h3>
+                <p class="ex-sets">3 séries · 10–15 repetições · Descanso: 60s</p>
+              </div>
+              <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
+            </div>
+            <div class="ex-body">
+              <div class="ex-img-wrap">
+                <div class="ex-gif" data-label="Tríceps no Banco">
+                  <div class="ex-gif-icon">🔽</div>
+                  <div class="ex-gif-muscles">Tríceps · Ombro anterior</div>
+                </div>
+              </div>
+              <div class="ex-instructions">
+                <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> Mãos apoiadas no banco atrás, pernas estendidas, glúteos fora do banco.</p></div>
+                <div class="ex-step"><span class="step-num">2</span><p><strong>Descida:</strong> Dobre os cotovelos baixando o corpo até ~90° de flexão.</p></div>
+                <div class="ex-step"><span class="step-num">3</span><p><strong>Subida:</strong> Empurre com os tríceps voltando à posição inicial.</p></div>
+                <div class="ex-tip">💡 Mantenha as costas próximas ao banco. Para aumentar a dificuldade, eleve os pés em outro banco.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-conclude" data-treino="a" id="btnConcludeA">
+          <span class="btn-conclude-icon">✓</span>
+          Marcar Treino A como Concluído
+        </button>
+      </section>
+
+      <!-- ===== TREINO B ===== -->
+      <section class="tab-section" id="tab-b">
+        <div class="section-hero" style="--accent-color: #4af0b0;">
+          <div class="section-hero-text">
+            <p class="section-day">Quarta-feira</p>
+            <h2 class="section-title">Costas<br>+ Bíceps</h2>
+          </div>
+          <div class="section-meta">
+            <div class="meta-pill">4 exercícios</div>
+            <div class="meta-pill">~60 min</div>
+          </div>
+        </div>
+
+        <div class="time-bar">
+          <div class="time-seg" style="--c:#4af0b0"><span>10'</span>Aquecimento</div>
+          <div class="time-seg" style="--c:#4af0b0"><span>40'</span>Musculação</div>
+          <div class="time-seg" style="--c:#f0a84a"><span>5'</span>Cardio</div>
+          <div class="time-seg" style="--c:#8899aa"><span>5'</span>Alongar</div>
+        </div>
+
+        <div class="ex-list">
+          <div class="ex-card" data-id="b1">
+            <div class="ex-card-top">
+              <div class="ex-emoji-wrap" style="--ec:#4af0b0">⬆️</div>
+              <div class="ex-info">
+                <h3 class="ex-name">Puxada Frontal</h3>
+                <p class="ex-sets">4 séries · 10–12 repetições · Descanso: 90s</p>
+              </div>
+              <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
+            </div>
+            <div class="ex-body">
+              <div class="ex-img-wrap">
+                <div class="ex-gif" data-label="Puxada Frontal">
+                  <div class="ex-gif-icon">⬆️</div>
+                  <div class="ex-gif-muscles">Grande dorsal · Bíceps · Romboides</div>
+                  <div class="ex-gif-diagram">
+                    <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="10" y="20" width="180" height="8" rx="4" fill="#2a2d35"/>
+                      <ellipse cx="100" cy="55" rx="18" ry="26" fill="#4af0b0" opacity="0.8"/>
+                      <circle cx="100" cy="30" rx="12" fill="#444"/>
+                      <line x1="100" y1="42" x2="100" y2="81" stroke="#888" stroke-width="3"/>
+                      <line x1="100" y1="27" x2="50" y2="24" stroke="#4af0b0" stroke-width="3" stroke-linecap="round"/>
+                      <line x1="100" y1="27" x2="150" y2="24" stroke="#4af0b0" stroke-width="3" stroke-linecap="round"/>
+                      <text x="100" y="108" text-anchor="middle" fill="#7a7f8e" font-size="9" font-family="sans-serif">puxe até o queixo</text>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="ex-instructions">
+                <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> Sentado, segure a barra larga com mãos mais largas que os ombros, palmas para fora.</p></div>
+                <div class="ex-step"><span class="step-num">2</span><p><strong>Execução:</strong> Puxe a barra até a altura do queixo abrindo o peito, cotovelos apontando para baixo.</p></div>
+                <div class="ex-step"><span class="step-num">3</span><p><strong>Retorno:</strong> Suba controlando o peso — não deixe a barra voar para cima.</p></div>
+                <div class="ex-tip">💡 Pense em "puxar com os cotovelos" — não com as mãos. Isso ativa muito mais as costas.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ex-card" data-id="b2">
+            <div class="ex-card-top">
+              <div class="ex-emoji-wrap" style="--ec:#4af0b0">🔙</div>
+              <div class="ex-info">
+                <h3 class="ex-name">Remada Baixa</h3>
+                <p class="ex-sets">3 séries · 10–12 repetições · Descanso: 90s</p>
+              </div>
+              <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
+            </div>
+            <div class="ex-body">
+              <div class="ex-img-wrap">
+                <div class="ex-gif" data-label="Remada Baixa">
+                  <div class="ex-gif-icon">🔙</div>
+                  <div class="ex-gif-muscles">Grande dorsal · Romboides · Bíceps</div>
+                </div>
+              </div>
+              <div class="ex-instructions">
+                <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> Sentado, pés no apoio, joelhos levemente flexionados. Costas retas, não curvadas.</p></div>
+                <div class="ex-step"><span class="step-num">2</span><p><strong>Execução:</strong> Puxe o cabo em direção ao abdômen, cotovelos rentes ao tronco.</p></div>
+                <div class="ex-step"><span class="step-num">3</span><p><strong>Contração:</strong> Segure 1 segundo contraído, depois volte devagar.</p></div>
+                <div class="ex-tip">💡 Não se jogue para trás para pegar mais carga — isso tira o trabalho das costas e sobrecarrega a lombar.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ex-card" data-id="b3">
+            <div class="ex-card-top">
+              <div class="ex-emoji-wrap" style="--ec:#4af0b0">💪</div>
+              <div class="ex-info">
+                <h3 class="ex-name">Rosca Direta</h3>
+                <p class="ex-sets">3 séries · 12 repetições · Descanso: 60s</p>
+              </div>
+              <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
+            </div>
+            <div class="ex-body">
+              <div class="ex-img-wrap">
+                <div class="ex-gif" data-label="Rosca Direta">
+                  <div class="ex-gif-icon">💪</div>
+                  <div class="ex-gif-muscles">Bíceps · Braquial</div>
+                </div>
+              </div>
+              <div class="ex-instructions">
+                <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> De pé, costas retas, cotovelos colados ao corpo. Barra ou halteres com palma para cima.</p></div>
+                <div class="ex-step"><span class="step-num">2</span><p><strong>Subida:</strong> Flexione os cotovelos levantando o peso até os ombros.</p></div>
+                <div class="ex-step"><span class="step-num">3</span><p><strong>Descida:</strong> Desça de forma controlada — não jogue o peso para baixo.</p></div>
+                <div class="ex-tip">💡 Se você balança o corpo para levantar, o peso está pesado demais. Reduza a carga.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ex-card" data-id="b4">
+            <div class="ex-card-top">
+              <div class="ex-emoji-wrap" style="--ec:#4af0b0">🤜</div>
+              <div class="ex-info">
+                <h3 class="ex-name">Rosca Martelo</h3>
+                <p class="ex-sets">3 séries · 12 repetições · Descanso: 60s</p>
+              </div>
+              <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
+            </div>
+            <div class="ex-body">
+              <div class="ex-img-wrap">
+                <div class="ex-gif" data-label="Rosca Martelo">
+                  <div class="ex-gif-icon">🤜</div>
+                  <div class="ex-gif-muscles">Braquial · Bíceps · Braquiorradial</div>
+                </div>
+              </div>
+              <div class="ex-instructions">
+                <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> De pé com halteres, palmas voltadas para o corpo (pegada neutra).</p></div>
+                <div class="ex-step"><span class="step-num">2</span><p><strong>Execução:</strong> Suba um halter de cada vez (ou juntos) até o ombro, palma sempre voltada para dentro.</p></div>
+                <div class="ex-step"><span class="step-num">3</span><p><strong>Descida:</strong> Volte devagar sem girar o pulso.</p></div>
+                <div class="ex-tip">💡 Trabalha o braquial (músculo sob o bíceps) dando espessura e volume ao braço.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-conclude" data-treino="b" id="btnConcludeB">
+          <span class="btn-conclude-icon">✓</span>
+          Marcar Treino B como Concluído
+        </button>
+      </section>
+
+      <!-- ===== TREINO C ===== -->
+      <section class="tab-section" id="tab-c">
+        <div class="section-hero" style="--accent-color: #f0a84a;">
+          <div class="section-hero-text">
+            <p class="section-day">Sexta-feira</p>
+            <h2 class="section-title">Pernas<br>+ Ombros</h2>
+          </div>
+          <div class="section-meta">
+            <div class="meta-pill">6 exercícios</div>
+            <div class="meta-pill">~60 min</div>
+          </div>
+        </div>
+
+        <div class="time-bar">
+          <div class="time-seg" style="--c:#4af0b0"><span>10'</span>Aquecimento</div>
+          <div class="time-seg" style="--c:#f0a84a"><span>40'</span>Musculação</div>
+          <div class="time-seg" style="--c:#f0a84a"><span>5'</span>Cardio</div>
+          <div class="time-seg" style="--c:#8899aa"><span>5'</span>Alongar</div>
+        </div>
+
+        <div class="ex-list">
+          <div class="ex-card" data-id="c1">
+            <div class="ex-card-top">
+              <div class="ex-emoji-wrap" style="--ec:#f0a84a">🦵</div>
+              <div class="ex-info">
+                <h3 class="ex-name">Agachamento</h3>
+                <p class="ex-sets">4 séries · 10–12 repetições · Descanso: 90s</p>
+              </div>
+              <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
+            </div>
+            <div class="ex-body">
+              <div class="ex-img-wrap">
+                <div class="ex-gif" data-label="Agachamento">
+                  <div class="ex-gif-icon">🦵</div>
+                  <div class="ex-gif-muscles">Quadríceps · Glúteo · Isquiotibiais</div>
+                  <div class="ex-gif-diagram">
+                    <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="100" cy="22" rx="12" fill="#444"/>
+                      <rect x="86" y="34" width="28" height="30" rx="6" fill="#f0a84a" opacity="0.9"/>
+                      <line x1="86" y1="64" x2="70" y2="90" stroke="#f0a84a" stroke-width="4" stroke-linecap="round"/>
+                      <line x1="114" y1="64" x2="130" y2="90" stroke="#f0a84a" stroke-width="4" stroke-linecap="round"/>
+                      <line x1="70" y1="90" x2="60" y2="110" stroke="#888" stroke-width="4" stroke-linecap="round"/>
+                      <line x1="130" y1="90" x2="140" y2="110" stroke="#888" stroke-width="4" stroke-linecap="round"/>
+                      <text x="100" y="118" text-anchor="middle" fill="#7a7f8e" font-size="9" font-family="sans-serif">coxas paralelas ao chão</text>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="ex-instructions">
+                <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> Pés na largura dos ombros, pontas levemente abertas. Barra no Smith machine ou livre.</p></div>
+                <div class="ex-step"><span class="step-num">2</span><p><strong>Descida:</strong> Empurre o quadril para baixo e para trás como se fosse sentar. Desça até as coxas ficarem paralelas ao chão.</p></div>
+                <div class="ex-step"><span class="step-num">3</span><p><strong>Subida:</strong> Empurre o chão com os pés, mantendo o joelho alinhado com os pés.</p></div>
+                <div class="ex-tip">💡 Nas primeiras semanas, pratique sem peso para fixar o padrão de movimento. É o exercício mais importante para as pernas.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ex-card" data-id="c2">
+            <div class="ex-card-top">
+              <div class="ex-emoji-wrap" style="--ec:#f0a84a">🚀</div>
+              <div class="ex-info">
+                <h3 class="ex-name">Leg Press 45°</h3>
+                <p class="ex-sets">3 séries · 12 repetições · Descanso: 90s</p>
+              </div>
+              <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
+            </div>
+            <div class="ex-body">
+              <div class="ex-img-wrap">
+                <div class="ex-gif" data-label="Leg Press">
+                  <div class="ex-gif-icon">🚀</div>
+                  <div class="ex-gif-muscles">Quadríceps · Glúteo · Isquiotibiais</div>
+                </div>
+              </div>
+              <div class="ex-instructions">
+                <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> Sentado no aparelho, pés na plataforma na largura do quadril, joelhos a ~90°.</p></div>
+                <div class="ex-step"><span class="step-num">2</span><p><strong>Execução:</strong> Empurre a plataforma até quase estender as pernas — não trave o joelho.</p></div>
+                <div class="ex-step"><span class="step-num">3</span><p><strong>Descida:</strong> Volte de forma controlada sem tirar as costas do banco.</p></div>
+                <div class="ex-tip">💡 Nunca deixe os joelhos colapsarem para dentro. Se isso acontecer, reduza o peso.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ex-card" data-id="c3">
+            <div class="ex-card-top">
+              <div class="ex-emoji-wrap" style="--ec:#f0a84a">🎯</div>
+              <div class="ex-info">
+                <h3 class="ex-name">Cadeira Extensora</h3>
+                <p class="ex-sets">3 séries · 15 repetições · Descanso: 60s</p>
+              </div>
+              <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
+            </div>
+            <div class="ex-body">
+              <div class="ex-img-wrap">
+                <div class="ex-gif" data-label="Cadeira Extensora">
+                  <div class="ex-gif-icon">🎯</div>
+                  <div class="ex-gif-muscles">Quadríceps (foco total)</div>
+                </div>
+              </div>
+              <div class="ex-instructions">
+                <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> Sentado, joelhos no eixo da máquina, tornozelo atrás do apoio acolchoado.</p></div>
+                <div class="ex-step"><span class="step-num">2</span><p><strong>Execução:</strong> Estenda as pernas até quase travar, segure 1 segundo contraído.</p></div>
+                <div class="ex-step"><span class="step-num">3</span><p><strong>Descida:</strong> Desça devagar — 3 a 4 segundos para baixo aumenta muito o ganho.</p></div>
+                <div class="ex-tip">💡 A descida lenta (excêntrico) é o segredo desse exercício. Não deixe o peso cair.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ex-card" data-id="c4">
+            <div class="ex-card-top">
+              <div class="ex-emoji-wrap" style="--ec:#f0a84a">⬆️</div>
+              <div class="ex-info">
+                <h3 class="ex-name">Desenvolvimento com Halteres</h3>
+                <p class="ex-sets">3 séries · 10–12 repetições · Descanso: 90s</p>
+              </div>
+              <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
+            </div>
+            <div class="ex-body">
+              <div class="ex-img-wrap">
+                <div class="ex-gif" data-label="Desenvolvimento">
+                  <div class="ex-gif-icon">⬆️</div>
+                  <div class="ex-gif-muscles">Deltóide anterior e lateral · Trapézio</div>
+                </div>
+              </div>
+              <div class="ex-instructions">
+                <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> Sentado com encosto, halteres na altura dos ombros, cotovelos a ~90° para os lados.</p></div>
+                <div class="ex-step"><span class="step-num">2</span><p><strong>Subida:</strong> Empurre os halteres para cima até quase estender os braços.</p></div>
+                <div class="ex-step"><span class="step-num">3</span><p><strong>Descida:</strong> Volte de forma controlada à posição inicial.</p></div>
+                <div class="ex-tip">💡 Halteres são melhores que a barra para iniciantes — movimento mais natural e proteção para os ombros.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ex-card" data-id="c5">
+            <div class="ex-card-top">
+              <div class="ex-emoji-wrap" style="--ec:#f0a84a">↔️</div>
+              <div class="ex-info">
+                <h3 class="ex-name">Elevação Lateral</h3>
+                <p class="ex-sets">3 séries · 15 repetições · Descanso: 60s</p>
+              </div>
+              <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
+            </div>
+            <div class="ex-body">
+              <div class="ex-img-wrap">
+                <div class="ex-gif" data-label="Elevação Lateral">
+                  <div class="ex-gif-icon">↔️</div>
+                  <div class="ex-gif-muscles">Deltóide lateral (ombro "redondo")</div>
+                </div>
+              </div>
+              <div class="ex-instructions">
+                <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> De pé, halteres ao lado do corpo, leve flexão no cotovelo.</p></div>
+                <div class="ex-step"><span class="step-num">2</span><p><strong>Execução:</strong> Eleve os braços para os lados até a altura dos ombros — não acima.</p></div>
+                <div class="ex-step"><span class="step-num">3</span><p><strong>Descida:</strong> Desça devagar, controlando o peso.</p></div>
+                <div class="ex-tip">💡 Use peso muito leve no início. Com peso pesado você acaba usando o trapézio em vez do ombro.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ex-card" data-id="c6">
+            <div class="ex-card-top">
+              <div class="ex-emoji-wrap" style="--ec:#f0a84a">🦶</div>
+              <div class="ex-info">
+                <h3 class="ex-name">Elevação de Panturrilha</h3>
+                <p class="ex-sets">4 séries · 20 repetições · Descanso: 45s</p>
+              </div>
+              <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
+            </div>
+            <div class="ex-body">
+              <div class="ex-img-wrap">
+                <div class="ex-gif" data-label="Panturrilha">
+                  <div class="ex-gif-icon">🦶</div>
+                  <div class="ex-gif-muscles">Gastrocnêmio · Sóleo</div>
+                </div>
+              </div>
+              <div class="ex-instructions">
+                <div class="ex-step"><span class="step-num">1</span><p><strong>Posição:</strong> Pé em degrau ou aparelho, ponta dos pés apoiada, calcanhar no ar.</p></div>
+                <div class="ex-step"><span class="step-num">2</span><p><strong>Subida:</strong> Suba na ponta dos pés o máximo possível, segure 1 segundo no topo.</p></div>
+                <div class="ex-step"><span class="step-num">3</span><p><strong>Descida:</strong> Desça até o calcanhar ficar abaixo do degrau para esticar bem o músculo.</p></div>
+                <div class="ex-tip">💡 Panturrilha responde melhor com mais repetições. Faça devagar: 2s subindo, 2s descendo.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-conclude" data-treino="c" id="btnConcludeC">
+          <span class="btn-conclude-icon">✓</span>
+          Marcar Treino C como Concluído
+        </button>
+      </section>
+
+      <!-- ===== DICAS ===== -->
+      <section class="tab-section" id="tab-tips">
+        <div class="section-hero" style="--accent-color: #a78bfa;">
+          <div class="section-hero-text">
+            <p class="section-day">Sempre importante</p>
+            <h2 class="section-title">Dicas<br>Essenciais</h2>
+          </div>
+        </div>
+
+        <div class="tips-grid">
+          <div class="tip-card">
+            <div class="tip-icon">😴</div>
+            <h3 class="tip-title">Sono</h3>
+            <p class="tip-body">Durma 7–9h por noite. O músculo cresce durante o sono — não durante o treino.</p>
+          </div>
+          <div class="tip-card">
+            <div class="tip-icon">🥩</div>
+            <h3 class="tip-title">Proteína</h3>
+            <p class="tip-body">Consuma 1,6–2g por kg de peso. Ovos, frango, carne, atum e whey são ótimas fontes.</p>
+          </div>
+          <div class="tip-card">
+            <div class="tip-icon">💧</div>
+            <h3 class="tip-title">Hidratação</h3>
+            <p class="tip-body">Beba 2–3 litros de água por dia. Mais ainda nos dias de treino e no calor.</p>
+          </div>
+          <div class="tip-card">
+            <div class="tip-icon">📅</div>
+            <h3 class="tip-title">Descanso</h3>
+            <p class="tip-body">Deixe ao menos 1 dia de intervalo entre os treinos. Seg/Qua/Sex é o modelo ideal.</p>
+          </div>
+          <div class="tip-card">
+            <div class="tip-icon">📈</div>
+            <h3 class="tip-title">Progressão</h3>
+            <p class="tip-body">Tente aumentar 1–2kg ou 1 repetição por semana. Pequenas evoluções constantes fazem toda a diferença.</p>
+          </div>
+          <div class="tip-card">
+            <div class="tip-icon">🔥</div>
+            <h3 class="tip-title">Aquecimento</h3>
+            <p class="tip-body">Sempre 10 min de aquecimento (esteira, bike ou mobilidade) antes do peso. Previne lesões.</p>
+          </div>
+          <div class="tip-card">
+            <div class="tip-icon">⏱️</div>
+            <h3 class="tip-title">Descanso entre séries</h3>
+            <p class="tip-body">60–90 segundos para exercícios de musculação. Respeitar o descanso é tão importante quanto o exercício.</p>
+          </div>
+          <div class="tip-card">
+            <div class="tip-icon">🧠</div>
+            <h3 class="tip-title">Conexão mental</h3>
+            <p class="tip-body">Pense no músculo que você está trabalhando durante o exercício. Isso aumenta a ativação muscular comprovadamente.</p>
+          </div>
+        </div>
+
+        <div class="prog-section">
+          <h3 class="prog-title">Progressão por semanas</h3>
+          <div class="prog-item">
+            <div class="prog-row-label">
+              <span>Semana 1–2</span><span class="prog-tag">Técnica</span>
+            </div>
+            <div class="prog-track"><div class="prog-fill" style="width:30%; background:#4af0b0"></div></div>
+            <p class="prog-desc">Aprenda o movimento correto de cada exercício com carga leve.</p>
+          </div>
+          <div class="prog-item">
+            <div class="prog-row-label">
+              <span>Semana 3–4</span><span class="prog-tag">Adaptação</span>
+            </div>
+            <div class="prog-track"><div class="prog-fill" style="width:55%"></div></div>
+            <p class="prog-desc">Aumente a carga gradualmente mantendo a técnica impecável.</p>
+          </div>
+          <div class="prog-item">
+            <div class="prog-row-label">
+              <span>Semana 5–8</span><span class="prog-tag">Força</span>
+            </div>
+            <div class="prog-track"><div class="prog-fill" style="width:78%"></div></div>
+            <p class="prog-desc">Carga moderada. Adicione uma 4ª série nos exercícios principais.</p>
+          </div>
+          <div class="prog-item">
+            <div class="prog-row-label">
+              <span>Mês 3+</span><span class="prog-tag" style="background:#f0a84a22; color:#f0a84a;">Crescimento</span>
+            </div>
+            <div class="prog-track"><div class="prog-fill" style="width:100%; background:#f0a84a"></div></div>
+            <p class="prog-desc">Você estará pronto para um treino intermediário com mais volume.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <!-- MODAL CONCLUSÃO -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-emoji" id="modalEmoji">🎉</div>
+      <h2 class="modal-title" id="modalTitle">Treino Concluído!</h2>
+      <p class="modal-body" id="modalBody">Ótimo trabalho! Continue assim.</p>
+      <button class="modal-btn" id="modalBtn">Fechar</button>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
