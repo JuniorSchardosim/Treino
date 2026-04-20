@@ -12,36 +12,100 @@
   <style>
     /* ── SIGLA ICON ── */
     .ex-sigla {
-      width: 44px; height: 44px;
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 15px;
-      letter-spacing: 0.04em;
-      flex-shrink: 0;
-      background: color-mix(in srgb, var(--ec, var(--accent)) 15%, transparent);
-      border: 1px solid color-mix(in srgb, var(--ec, var(--accent)) 30%, transparent);
-      color: var(--ec, var(--accent));
+      width:44px; height:44px; border-radius:10px;
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:.04em;
+      flex-shrink:0;
+      background:color-mix(in srgb,var(--ec,var(--accent)) 15%,transparent);
+      border:1px solid color-mix(in srgb,var(--ec,var(--accent)) 30%,transparent);
+      color:var(--ec,var(--accent));
     }
-
-    /* ── EXERCISE IMAGE ── */
     .ex-img-real { width:100%; aspect-ratio:16/9; object-fit:cover; display:block; background:var(--surface2); }
     .ex-img-fallback { width:100%; min-height:120px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; background:var(--surface2); padding:20px; }
     .ex-img-fallback .ex-sigla-big { font-family:'Bebas Neue',sans-serif; font-size:36px; color:var(--muted); }
     .ex-img-fallback .ex-gif-muscles { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; text-align:center; }
     .ex-video-link { display:inline-flex; align-items:center; gap:6px; font-size:12px; color:var(--accent); text-decoration:none; margin:8px 14px 0; padding:6px 12px; background:color-mix(in srgb,var(--accent) 10%,transparent); border:1px solid color-mix(in srgb,var(--accent) 25%,transparent); border-radius:20px; transition:background .2s; }
     .ex-video-link:hover { background:color-mix(in srgb,var(--accent) 18%,transparent); }
-
-    /* ── MUSCLE BADGE ── */
     .muscle-badges { display:flex; flex-wrap:wrap; gap:5px; padding:10px 14px 0; }
     .muscle-badge { font-size:10px; font-weight:500; padding:3px 8px; border-radius:20px; letter-spacing:.04em; text-transform:uppercase; }
     .muscle-badge.primary { background:color-mix(in srgb,var(--ec-badge,var(--accent)) 18%,transparent); color:var(--ec-badge,var(--accent)); border:1px solid color-mix(in srgb,var(--ec-badge,var(--accent)) 30%,transparent); }
     .muscle-badge.secondary { background:var(--surface2); color:var(--muted); border:1px solid var(--border); }
 
-    /* ── TAB NAV — 6 abas ── */
-    .tab-btn { padding: 8px 4px; }
-    .tab-letter { font-size: 13px; }
-    .tab-name   { font-size: 9px; }
+    /* ══════════════════════════════════
+       WEEK STRIP — múltiplos treinos
+    ══════════════════════════════════ */
+    .week-strip {
+      display:flex;
+      gap:4px;
+      margin-bottom:8px;
+    }
+    .week-day {
+      flex:1;
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:var(--radius-sm);
+      overflow:hidden;
+      min-width:0;
+    }
+    .week-day.today { border-color:var(--border2); }
+
+    /* cabeçalho do dia */
+    .wd-header {
+      padding:4px 4px 2px;
+      text-align:center;
+      font-size:9px;
+      font-weight:600;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.05em;
+      border-bottom:1px solid var(--border);
+    }
+    .week-day.today .wd-header { color:var(--text); }
+
+    /* chips dos treinos */
+    .wd-chips {
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      padding:3px;
+    }
+    .wd-chip {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:3px 2px;
+      border-radius:4px;
+      font-family:'Bebas Neue',sans-serif;
+      font-size:12px;
+      letter-spacing:.03em;
+      cursor:pointer;
+      transition:opacity .15s;
+      -webkit-tap-highlight-color:transparent;
+      position:relative;
+    }
+    .wd-chip:hover { opacity:.8; }
+    .wd-chip.done {
+      text-decoration:line-through;
+      opacity:.6;
+    }
+    .wd-chip.done::after {
+      content:'✓';
+      position:absolute;
+      right:3px;
+      font-size:9px;
+    }
+    /* dias sem treino */
+    .wd-rest {
+      padding:6px 4px;
+      text-align:center;
+      font-size:9px;
+      color:var(--border2);
+    }
+
+    /* ── TAB NAV – 8 abas compactas ── */
+    .tab-btn { padding:7px 2px; }
+    .tab-letter { font-size:12px; }
+    .tab-name   { font-size:8px; }
 
     /* ── CONFIG ── */
     .config-section { padding:16px 12px 40px; display:flex; flex-direction:column; gap:16px; }
@@ -53,14 +117,16 @@
     .config-sub { font-size:11px; color:var(--muted); margin-top:2px; }
     .config-select { background:var(--surface2); border:1px solid var(--border2); border-radius:var(--radius-sm); color:var(--text); font-family:'DM Sans',sans-serif; font-size:13px; padding:6px 10px; width:140px; cursor:pointer; }
     .config-select:focus { outline:none; border-color:var(--accent); }
-    .btn-save-config { width:100%; padding:14px; background:var(--accent); color:#0b0c0f; border:none; border-radius:var(--radius); font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; cursor:pointer; transition:opacity .2s; }
+    .btn-save-config { width:100%; padding:14px; background:var(--accent); color:#0b0c0f; border:none; border-radius:var(--radius); font-family:'DM Sans',sans-serif; font-size:14px; font-weight:600; cursor:pointer; }
     .btn-save-config:hover { opacity:.9; }
     .time-inputs { display:flex; gap:8px; flex-wrap:wrap; }
-    .time-input-group { display:flex; flex-direction:column; align-items:center; gap:4px; flex:1; min-width:60px; }
+    .time-input-group { display:flex; flex-direction:column; align-items:center; gap:4px; flex:1; min-width:55px; }
     .time-input-group label { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; }
-    .time-input-group input { background:var(--surface2); border:1px solid var(--border2); border-radius:var(--radius-sm); color:var(--text); font-family:'Bebas Neue',sans-serif; font-size:22px; padding:6px 4px; width:100%; text-align:center; }
+    .time-input-group input { background:var(--surface2); border:1px solid var(--border2); border-radius:var(--radius-sm); color:var(--text); font-family:'Bebas Neue',sans-serif; font-size:20px; padding:6px 4px; width:100%; text-align:center; }
     .time-input-group input:focus { outline:none; border-color:var(--accent); }
     .time-input-group span { font-size:9px; color:var(--muted); }
+    .time-block { margin-bottom:12px; }
+    .time-block-label { font-size:12px; color:var(--muted); font-weight:600; margin-bottom:6px; }
 
     /* ── SYNC ── */
     .sync-status { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--muted); padding:10px 14px; background:var(--surface2); border-radius:var(--radius-sm); }
@@ -72,32 +138,14 @@
     .setup-card { background:var(--surface); border:1px solid var(--border2); border-radius:var(--radius); padding:20px; }
     .setup-card h3 { font-size:15px; font-weight:600; color:var(--text); margin-bottom:8px; }
     .setup-card p  { font-size:13px; color:var(--muted); line-height:1.6; margin-bottom:12px; }
-    .setup-steps { display:flex; flex-direction:column; gap:10px; margin-bottom:16px; }
-    .setup-step { display:flex; gap:10px; align-items:flex-start; background:var(--surface2); border-radius:var(--radius-sm); padding:10px 12px; }
-    .setup-step-num { width:22px; height:22px; border-radius:50%; background:color-mix(in srgb,var(--accent) 20%,transparent); color:var(--accent); font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
-    .setup-step p { font-size:12px; color:var(--muted); margin:0; }
-    .setup-step a { color:var(--accent); text-decoration:none; }
-    .setup-step code { background:var(--surface); padding:1px 5px; border-radius:4px; font-size:11px; color:var(--text); }
     .setup-input-group { display:flex; flex-direction:column; gap:8px; margin-bottom:12px; }
     .setup-input-group label { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; }
     .setup-input { background:var(--surface2); border:1px solid var(--border2); border-radius:var(--radius-sm); color:var(--text); font-family:'DM Sans',sans-serif; font-size:12px; padding:10px 12px; width:100%; }
     .setup-input:focus { outline:none; border-color:var(--accent); }
-    .btn-connect-firebase { width:100%; padding:12px; background:color-mix(in srgb,var(--accent) 15%,transparent); color:var(--accent); border:1.5px solid var(--accent); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:13px; font-weight:600; cursor:pointer; transition:background .2s; }
+    .btn-connect-firebase { width:100%; padding:12px; background:color-mix(in srgb,var(--accent) 15%,transparent); color:var(--accent); border:1.5px solid var(--accent); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:13px; font-weight:600; cursor:pointer; }
     .btn-connect-firebase:hover { background:color-mix(in srgb,var(--accent) 25%,transparent); }
     .connected-badge { display:flex; align-items:center; gap:8px; padding:10px 14px; background:color-mix(in srgb,#4af0b0 10%,transparent); border:1px solid color-mix(in srgb,#4af0b0 30%,transparent); border-radius:var(--radius-sm); font-size:12px; color:#4af0b0; margin-bottom:8px; }
     .btn-disconnect { background:none; border:none; color:var(--muted); font-size:11px; cursor:pointer; text-decoration:underline; padding:0; }
-
-    /* subtreino badge */
-    .sub-badge {
-      display: inline-block;
-      font-size: 10px;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 20px;
-      letter-spacing: .05em;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
   </style>
 </head>
 <body>
@@ -107,7 +155,7 @@
   <div class="splash-inner">
     <div class="splash-logo">💪</div>
     <h1 class="splash-title">MEU<br><span>TREINO</span></h1>
-    <p class="splash-sub">Ganho de massa · Iniciante · 6×/semana</p>
+    <p class="splash-sub">Ganho de massa · Iniciante · 6 treinos/semana</p>
   </div>
 </div>
 
@@ -159,11 +207,10 @@
         <div class="time-seg" style="--c:#8899aa"><span id="tA1_str">5'</span>Alongar</div>
       </div>
       <div class="ex-list">
-
         <div class="ex-card" data-id="a1_1">
           <div class="ex-card-top">
             <div class="ex-sigla" style="--ec:#c8f135">SR</div>
-            <div class="ex-info"><h3 class="ex-name">Supino Reto</h3><p class="ex-sets">3 séries · 10–12 repetições · Descanso: 90s</p></div>
+            <div class="ex-info"><h3 class="ex-name">Supino Reto</h3><p class="ex-sets">3 séries · 10–12 rep · Descanso: 90s</p></div>
             <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
           </div>
           <div class="ex-body">
@@ -179,11 +226,10 @@
             </div>
           </div>
         </div>
-
         <div class="ex-card" data-id="a1_2">
           <div class="ex-card-top">
             <div class="ex-sigla" style="--ec:#c8f135">CI</div>
-            <div class="ex-info"><h3 class="ex-name">Crucifixo Inclinado</h3><p class="ex-sets">3 séries · 12 repetições · Descanso: 60s</p></div>
+            <div class="ex-info"><h3 class="ex-name">Crucifixo Inclinado</h3><p class="ex-sets">3 séries · 12 rep · Descanso: 60s</p></div>
             <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
           </div>
           <div class="ex-body">
@@ -199,11 +245,10 @@
             </div>
           </div>
         </div>
-
         <div class="ex-card" data-id="a1_3">
           <div class="ex-card-top">
             <div class="ex-sigla" style="--ec:#c8f135">CP</div>
-            <div class="ex-info"><h3 class="ex-name">Crossover na Polia</h3><p class="ex-sets">3 séries · 12–15 repetições · Descanso: 60s</p></div>
+            <div class="ex-info"><h3 class="ex-name">Crossover na Polia</h3><p class="ex-sets">3 séries · 12–15 rep · Descanso: 60s</p></div>
             <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
           </div>
           <div class="ex-body">
@@ -219,7 +264,6 @@
             </div>
           </div>
         </div>
-
       </div>
       <button class="btn-conclude" data-treino="a1" id="btnConcludeA1"><span class="btn-conclude-icon">✓</span> Marcar Treino A1 como Concluído</button>
     </section>
@@ -228,7 +272,7 @@
     <section class="tab-section" id="tab-a2">
       <div class="section-hero" style="--accent-color:#a78bfa">
         <div class="section-hero-text">
-          <p class="section-day" id="dayA2">Terça-feira</p>
+          <p class="section-day" id="dayA2">Segunda-feira</p>
           <h2 class="section-title">Treino A2<br>Tríceps</h2>
         </div>
         <div class="section-meta">
@@ -243,16 +287,15 @@
         <div class="time-seg" style="--c:#8899aa"><span id="tA2_str">5'</span>Alongar</div>
       </div>
       <div class="ex-list">
-
         <div class="ex-card" data-id="a2_1">
           <div class="ex-card-top">
             <div class="ex-sigla" style="--ec:#a78bfa">TP</div>
-            <div class="ex-info"><h3 class="ex-name">Tríceps Pulley</h3><p class="ex-sets">3 séries · 12–15 repetições · Descanso: 60s</p></div>
+            <div class="ex-info"><h3 class="ex-name">Tríceps Pulley</h3><p class="ex-sets">3 séries · 12–15 rep · Descanso: 60s</p></div>
             <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
           </div>
           <div class="ex-body">
             <img class="ex-img-real" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Triceps-pushdown-1.jpg/640px-Triceps-pushdown-1.jpg" alt="Tríceps Pulley" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-            <div class="ex-img-fallback" style="display:none"><div class="ex-sigla-big">TP</div><div class="ex-gif-muscles">Tríceps (cabeça longa e lateral)</div></div>
+            <div class="ex-img-fallback" style="display:none"><div class="ex-sigla-big">TP</div><div class="ex-gif-muscles">Tríceps</div></div>
             <div class="muscle-badges"><span class="muscle-badge primary" style="--ec-badge:#a78bfa">Tríceps</span><span class="muscle-badge secondary">Cabeça longa</span><span class="muscle-badge secondary">Cabeça lateral</span></div>
             <a class="ex-video-link" href="https://www.youtube.com/results?search_query=triceps+pulley+execucao+correto" target="_blank" rel="noopener">▶ Ver vídeo no YouTube</a>
             <div class="ex-instructions">
@@ -263,11 +306,10 @@
             </div>
           </div>
         </div>
-
         <div class="ex-card" data-id="a2_2">
           <div class="ex-card-top">
             <div class="ex-sigla" style="--ec:#a78bfa">TB</div>
-            <div class="ex-info"><h3 class="ex-name">Tríceps no Banco</h3><p class="ex-sets">3 séries · 10–15 repetições · Descanso: 60s</p></div>
+            <div class="ex-info"><h3 class="ex-name">Tríceps no Banco</h3><p class="ex-sets">3 séries · 10–15 rep · Descanso: 60s</p></div>
             <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
           </div>
           <div class="ex-body">
@@ -283,7 +325,6 @@
             </div>
           </div>
         </div>
-
       </div>
       <button class="btn-conclude" data-treino="a2" id="btnConcludeA2"><span class="btn-conclude-icon">✓</span> Marcar Treino A2 como Concluído</button>
     </section>
@@ -307,11 +348,10 @@
         <div class="time-seg" style="--c:#8899aa"><span id="tB1_str">5'</span>Alongar</div>
       </div>
       <div class="ex-list">
-
         <div class="ex-card" data-id="b1_1">
           <div class="ex-card-top">
             <div class="ex-sigla" style="--ec:#4af0b0">PF</div>
-            <div class="ex-info"><h3 class="ex-name">Puxada Frontal</h3><p class="ex-sets">4 séries · 10–12 repetições · Descanso: 90s</p></div>
+            <div class="ex-info"><h3 class="ex-name">Puxada Frontal</h3><p class="ex-sets">4 séries · 10–12 rep · Descanso: 90s</p></div>
             <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
           </div>
           <div class="ex-body">
@@ -327,11 +367,10 @@
             </div>
           </div>
         </div>
-
         <div class="ex-card" data-id="b1_2">
           <div class="ex-card-top">
             <div class="ex-sigla" style="--ec:#4af0b0">RB</div>
-            <div class="ex-info"><h3 class="ex-name">Remada Baixa</h3><p class="ex-sets">3 séries · 10–12 repetições · Descanso: 90s</p></div>
+            <div class="ex-info"><h3 class="ex-name">Remada Baixa</h3><p class="ex-sets">3 séries · 10–12 rep · Descanso: 90s</p></div>
             <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
           </div>
           <div class="ex-body">
@@ -347,7 +386,6 @@
             </div>
           </div>
         </div>
-
       </div>
       <button class="btn-conclude" data-treino="b1" id="btnConcludeB1"><span class="btn-conclude-icon">✓</span> Marcar Treino B1 como Concluído</button>
     </section>
@@ -356,7 +394,7 @@
     <section class="tab-section" id="tab-b2">
       <div class="section-hero" style="--accent-color:#f0a84a">
         <div class="section-hero-text">
-          <p class="section-day" id="dayB2">Quinta-feira</p>
+          <p class="section-day" id="dayB2">Quarta-feira</p>
           <h2 class="section-title">Treino B2<br>Bíceps</h2>
         </div>
         <div class="section-meta">
@@ -371,11 +409,10 @@
         <div class="time-seg" style="--c:#8899aa"><span id="tB2_str">5'</span>Alongar</div>
       </div>
       <div class="ex-list">
-
         <div class="ex-card" data-id="b2_1">
           <div class="ex-card-top">
             <div class="ex-sigla" style="--ec:#f0a84a">RD</div>
-            <div class="ex-info"><h3 class="ex-name">Rosca Direta</h3><p class="ex-sets">3 séries · 12 repetições · Descanso: 60s</p></div>
+            <div class="ex-info"><h3 class="ex-name">Rosca Direta</h3><p class="ex-sets">3 séries · 12 rep · Descanso: 60s</p></div>
             <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
           </div>
           <div class="ex-body">
@@ -391,11 +428,10 @@
             </div>
           </div>
         </div>
-
         <div class="ex-card" data-id="b2_2">
           <div class="ex-card-top">
             <div class="ex-sigla" style="--ec:#f0a84a">RM</div>
-            <div class="ex-info"><h3 class="ex-name">Rosca Martelo</h3><p class="ex-sets">3 séries · 12 repetições · Descanso: 60s</p></div>
+            <div class="ex-info"><h3 class="ex-name">Rosca Martelo</h3><p class="ex-sets">3 séries · 12 rep · Descanso: 60s</p></div>
             <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
           </div>
           <div class="ex-body">
@@ -411,7 +447,6 @@
             </div>
           </div>
         </div>
-
       </div>
       <button class="btn-conclude" data-treino="b2" id="btnConcludeB2"><span class="btn-conclude-icon">✓</span> Marcar Treino B2 como Concluído</button>
     </section>
@@ -435,11 +470,10 @@
         <div class="time-seg" style="--c:#8899aa"><span id="tC1_str">5'</span>Alongar</div>
       </div>
       <div class="ex-list">
-
         <div class="ex-card" data-id="c1_1">
           <div class="ex-card-top">
             <div class="ex-sigla" style="--ec:#ff6060">AG</div>
-            <div class="ex-info"><h3 class="ex-name">Agachamento</h3><p class="ex-sets">4 séries · 10–12 repetições · Descanso: 90s</p></div>
+            <div class="ex-info"><h3 class="ex-name">Agachamento</h3><p class="ex-sets">4 séries · 10–12 rep · Descanso: 90s</p></div>
             <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
           </div>
           <div class="ex-body">
@@ -455,11 +489,10 @@
             </div>
           </div>
         </div>
-
         <div class="ex-card" data-id="c1_2">
           <div class="ex-card-top">
             <div class="ex-sigla" style="--ec:#ff6060">LP</div>
-            <div class="ex-info"><h3 class="ex-name">Leg Press 45°</h3><p class="ex-sets">3 séries · 12 repetições · Descanso: 90s</p></div>
+            <div class="ex-info"><h3 class="ex-name">Leg Press 45°</h3><p class="ex-sets">3 séries · 12 rep · Descanso: 90s</p></div>
             <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
           </div>
           <div class="ex-body">
@@ -475,11 +508,10 @@
             </div>
           </div>
         </div>
-
         <div class="ex-card" data-id="c1_3">
           <div class="ex-card-top">
             <div class="ex-sigla" style="--ec:#ff6060">CE</div>
-            <div class="ex-info"><h3 class="ex-name">Cadeira Extensora</h3><p class="ex-sets">3 séries · 15 repetições · Descanso: 60s</p></div>
+            <div class="ex-info"><h3 class="ex-name">Cadeira Extensora</h3><p class="ex-sets">3 séries · 15 rep · Descanso: 60s</p></div>
             <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
           </div>
           <div class="ex-body">
@@ -495,7 +527,6 @@
             </div>
           </div>
         </div>
-
       </div>
       <button class="btn-conclude" data-treino="c1" id="btnConcludeC1"><span class="btn-conclude-icon">✓</span> Marcar Treino C1 como Concluído</button>
     </section>
@@ -504,7 +535,7 @@
     <section class="tab-section" id="tab-c2">
       <div class="section-hero" style="--accent-color:#4af0b0">
         <div class="section-hero-text">
-          <p class="section-day" id="dayC2">Sábado</p>
+          <p class="section-day" id="dayC2">Sexta-feira</p>
           <h2 class="section-title">Treino C2<br>Ombros</h2>
         </div>
         <div class="section-meta">
@@ -519,11 +550,10 @@
         <div class="time-seg" style="--c:#8899aa"><span id="tC2_str">5'</span>Alongar</div>
       </div>
       <div class="ex-list">
-
         <div class="ex-card" data-id="c2_1">
           <div class="ex-card-top">
             <div class="ex-sigla" style="--ec:#4af0b0">DH</div>
-            <div class="ex-info"><h3 class="ex-name">Desenvolvimento com Halteres</h3><p class="ex-sets">3 séries · 10–12 repetições · Descanso: 90s</p></div>
+            <div class="ex-info"><h3 class="ex-name">Desenvolvimento com Halteres</h3><p class="ex-sets">3 séries · 10–12 rep · Descanso: 90s</p></div>
             <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
           </div>
           <div class="ex-body">
@@ -539,11 +569,10 @@
             </div>
           </div>
         </div>
-
         <div class="ex-card" data-id="c2_2">
           <div class="ex-card-top">
             <div class="ex-sigla" style="--ec:#4af0b0">EL</div>
-            <div class="ex-info"><h3 class="ex-name">Elevação Lateral</h3><p class="ex-sets">3 séries · 15 repetições · Descanso: 60s</p></div>
+            <div class="ex-info"><h3 class="ex-name">Elevação Lateral</h3><p class="ex-sets">3 séries · 15 rep · Descanso: 60s</p></div>
             <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
           </div>
           <div class="ex-body">
@@ -559,11 +588,10 @@
             </div>
           </div>
         </div>
-
         <div class="ex-card" data-id="c2_3">
           <div class="ex-card-top">
             <div class="ex-sigla" style="--ec:#4af0b0">EP</div>
-            <div class="ex-info"><h3 class="ex-name">Elevação de Panturrilha</h3><p class="ex-sets">4 séries · 20 repetições · Descanso: 45s</p></div>
+            <div class="ex-info"><h3 class="ex-name">Elevação de Panturrilha</h3><p class="ex-sets">4 séries · 20 rep · Descanso: 45s</p></div>
             <button class="ex-toggle-btn" aria-label="Expandir">▼</button>
           </div>
           <div class="ex-body">
@@ -579,7 +607,6 @@
             </div>
           </div>
         </div>
-
       </div>
       <button class="btn-conclude" data-treino="c2" id="btnConcludeC2"><span class="btn-conclude-icon">✓</span> Marcar Treino C2 como Concluído</button>
     </section>
@@ -639,39 +666,39 @@
         <div class="config-card">
           <h3>📅 Dias de Treino</h3>
           <div class="config-row">
-            <div class="config-label">A1 — Peito<div class="config-sub">Qual dia da semana?</div></div>
+            <div class="config-label"><span style="font-family:'Bebas Neue';font-size:14px;color:#c8f135">A1</span> — Peito<div class="config-sub">Qual dia?</div></div>
             <select class="config-select" id="cfg_dayA1">
               <option value="Segunda-feira" selected>Segunda</option><option value="Terça-feira">Terça</option><option value="Quarta-feira">Quarta</option><option value="Quinta-feira">Quinta</option><option value="Sexta-feira">Sexta</option><option value="Sábado">Sábado</option><option value="Domingo">Domingo</option>
             </select>
           </div>
           <div class="config-row">
-            <div class="config-label">A2 — Tríceps<div class="config-sub">Qual dia da semana?</div></div>
+            <div class="config-label"><span style="font-family:'Bebas Neue';font-size:14px;color:#a78bfa">A2</span> — Tríceps<div class="config-sub">Qual dia?</div></div>
             <select class="config-select" id="cfg_dayA2">
-              <option value="Segunda-feira">Segunda</option><option value="Terça-feira" selected>Terça</option><option value="Quarta-feira">Quarta</option><option value="Quinta-feira">Quinta</option><option value="Sexta-feira">Sexta</option><option value="Sábado">Sábado</option><option value="Domingo">Domingo</option>
+              <option value="Segunda-feira" selected>Segunda</option><option value="Terça-feira">Terça</option><option value="Quarta-feira">Quarta</option><option value="Quinta-feira">Quinta</option><option value="Sexta-feira">Sexta</option><option value="Sábado">Sábado</option><option value="Domingo">Domingo</option>
             </select>
           </div>
           <div class="config-row">
-            <div class="config-label">B1 — Costas<div class="config-sub">Qual dia da semana?</div></div>
+            <div class="config-label"><span style="font-family:'Bebas Neue';font-size:14px;color:#4af0b0">B1</span> — Costas<div class="config-sub">Qual dia?</div></div>
             <select class="config-select" id="cfg_dayB1">
               <option value="Segunda-feira">Segunda</option><option value="Terça-feira">Terça</option><option value="Quarta-feira" selected>Quarta</option><option value="Quinta-feira">Quinta</option><option value="Sexta-feira">Sexta</option><option value="Sábado">Sábado</option><option value="Domingo">Domingo</option>
             </select>
           </div>
           <div class="config-row">
-            <div class="config-label">B2 — Bíceps<div class="config-sub">Qual dia da semana?</div></div>
+            <div class="config-label"><span style="font-family:'Bebas Neue';font-size:14px;color:#f0a84a">B2</span> — Bíceps<div class="config-sub">Qual dia?</div></div>
             <select class="config-select" id="cfg_dayB2">
-              <option value="Segunda-feira">Segunda</option><option value="Terça-feira">Terça</option><option value="Quarta-feira">Quarta</option><option value="Quinta-feira" selected>Quinta</option><option value="Sexta-feira">Sexta</option><option value="Sábado">Sábado</option><option value="Domingo">Domingo</option>
+              <option value="Segunda-feira">Segunda</option><option value="Terça-feira">Terça</option><option value="Quarta-feira" selected>Quarta</option><option value="Quinta-feira">Quinta</option><option value="Sexta-feira">Sexta</option><option value="Sábado">Sábado</option><option value="Domingo">Domingo</option>
             </select>
           </div>
           <div class="config-row">
-            <div class="config-label">C1 — Pernas<div class="config-sub">Qual dia da semana?</div></div>
+            <div class="config-label"><span style="font-family:'Bebas Neue';font-size:14px;color:#ff6060">C1</span> — Pernas<div class="config-sub">Qual dia?</div></div>
             <select class="config-select" id="cfg_dayC1">
               <option value="Segunda-feira">Segunda</option><option value="Terça-feira">Terça</option><option value="Quarta-feira">Quarta</option><option value="Quinta-feira">Quinta</option><option value="Sexta-feira" selected>Sexta</option><option value="Sábado">Sábado</option><option value="Domingo">Domingo</option>
             </select>
           </div>
           <div class="config-row">
-            <div class="config-label">C2 — Ombros<div class="config-sub">Qual dia da semana?</div></div>
+            <div class="config-label"><span style="font-family:'Bebas Neue';font-size:14px;color:#4af0b0">C2</span> — Ombros<div class="config-sub">Qual dia?</div></div>
             <select class="config-select" id="cfg_dayC2">
-              <option value="Segunda-feira">Segunda</option><option value="Terça-feira">Terça</option><option value="Quarta-feira">Quarta</option><option value="Quinta-feira">Quinta</option><option value="Sexta-feira">Sexta</option><option value="Sábado" selected>Sábado</option><option value="Domingo">Domingo</option>
+              <option value="Segunda-feira">Segunda</option><option value="Terça-feira">Terça</option><option value="Quarta-feira">Quarta</option><option value="Quinta-feira">Quinta</option><option value="Sexta-feira" selected>Sexta</option><option value="Sábado">Sábado</option><option value="Domingo">Domingo</option>
             </select>
           </div>
         </div>
@@ -680,55 +707,48 @@
         <div class="config-card">
           <h3>⏱️ Tempo por Treino (minutos)</h3>
           <div style="display:flex;flex-direction:column;gap:16px;margin-top:8px">
-
-            <div><p style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:600">A1 — Peito</p>
+            <div class="time-block"><div class="time-block-label" style="color:#c8f135">A1 — Peito</div>
             <div class="time-inputs">
               <div class="time-input-group"><label>Aquec.</label><input type="number" id="cfg_tA1_warm" value="10" min="0" max="60"/><span>min</span></div>
               <div class="time-input-group"><label>Musc.</label><input type="number" id="cfg_tA1_musc" value="35" min="0" max="120"/><span>min</span></div>
               <div class="time-input-group"><label>Cardio</label><input type="number" id="cfg_tA1_card" value="0" min="0" max="60"/><span>min</span></div>
               <div class="time-input-group"><label>Along.</label><input type="number" id="cfg_tA1_str" value="5" min="0" max="30"/><span>min</span></div>
             </div></div>
-
-            <div><p style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:600">A2 — Tríceps</p>
+            <div class="time-block"><div class="time-block-label" style="color:#a78bfa">A2 — Tríceps</div>
             <div class="time-inputs">
               <div class="time-input-group"><label>Aquec.</label><input type="number" id="cfg_tA2_warm" value="10" min="0" max="60"/><span>min</span></div>
               <div class="time-input-group"><label>Musc.</label><input type="number" id="cfg_tA2_musc" value="25" min="0" max="120"/><span>min</span></div>
               <div class="time-input-group"><label>Cardio</label><input type="number" id="cfg_tA2_card" value="0" min="0" max="60"/><span>min</span></div>
               <div class="time-input-group"><label>Along.</label><input type="number" id="cfg_tA2_str" value="5" min="0" max="30"/><span>min</span></div>
             </div></div>
-
-            <div><p style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:600">B1 — Costas</p>
+            <div class="time-block"><div class="time-block-label" style="color:#4af0b0">B1 — Costas</div>
             <div class="time-inputs">
               <div class="time-input-group"><label>Aquec.</label><input type="number" id="cfg_tB1_warm" value="10" min="0" max="60"/><span>min</span></div>
               <div class="time-input-group"><label>Musc.</label><input type="number" id="cfg_tB1_musc" value="35" min="0" max="120"/><span>min</span></div>
               <div class="time-input-group"><label>Cardio</label><input type="number" id="cfg_tB1_card" value="0" min="0" max="60"/><span>min</span></div>
               <div class="time-input-group"><label>Along.</label><input type="number" id="cfg_tB1_str" value="5" min="0" max="30"/><span>min</span></div>
             </div></div>
-
-            <div><p style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:600">B2 — Bíceps</p>
+            <div class="time-block"><div class="time-block-label" style="color:#f0a84a">B2 — Bíceps</div>
             <div class="time-inputs">
               <div class="time-input-group"><label>Aquec.</label><input type="number" id="cfg_tB2_warm" value="10" min="0" max="60"/><span>min</span></div>
               <div class="time-input-group"><label>Musc.</label><input type="number" id="cfg_tB2_musc" value="25" min="0" max="120"/><span>min</span></div>
               <div class="time-input-group"><label>Cardio</label><input type="number" id="cfg_tB2_card" value="0" min="0" max="60"/><span>min</span></div>
               <div class="time-input-group"><label>Along.</label><input type="number" id="cfg_tB2_str" value="5" min="0" max="30"/><span>min</span></div>
             </div></div>
-
-            <div><p style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:600">C1 — Pernas</p>
+            <div class="time-block"><div class="time-block-label" style="color:#ff6060">C1 — Pernas</div>
             <div class="time-inputs">
               <div class="time-input-group"><label>Aquec.</label><input type="number" id="cfg_tC1_warm" value="10" min="0" max="60"/><span>min</span></div>
               <div class="time-input-group"><label>Musc.</label><input type="number" id="cfg_tC1_musc" value="40" min="0" max="120"/><span>min</span></div>
               <div class="time-input-group"><label>Cardio</label><input type="number" id="cfg_tC1_card" value="0" min="0" max="60"/><span>min</span></div>
               <div class="time-input-group"><label>Along.</label><input type="number" id="cfg_tC1_str" value="5" min="0" max="30"/><span>min</span></div>
             </div></div>
-
-            <div><p style="font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:600">C2 — Ombros</p>
+            <div class="time-block"><div class="time-block-label" style="color:#4af0b0">C2 — Ombros</div>
             <div class="time-inputs">
               <div class="time-input-group"><label>Aquec.</label><input type="number" id="cfg_tC2_warm" value="10" min="0" max="60"/><span>min</span></div>
               <div class="time-input-group"><label>Musc.</label><input type="number" id="cfg_tC2_musc" value="35" min="0" max="120"/><span>min</span></div>
               <div class="time-input-group"><label>Cardio</label><input type="number" id="cfg_tC2_card" value="0" min="0" max="60"/><span>min</span></div>
               <div class="time-input-group"><label>Along.</label><input type="number" id="cfg_tC2_str" value="5" min="0" max="30"/><span>min</span></div>
             </div></div>
-
           </div>
         </div>
 
@@ -750,21 +770,29 @@
 </div>
 
 <script>
-/* ═══════════════════════════════════════
-   APP SCRIPT — versão A1/A2/B1/B2/C1/C2
-═══════════════════════════════════════ */
 'use strict';
 
-const STORAGE_KEY = 'meutreino_v2';
-const CFG_KEY     = 'meutreino_config_v2';
+/* ═══════════════════════════════════════════
+   CONFIGURAÇÃO DOS TREINOS
+   cor: cor do chip no week strip
+   dayDefault: índice JS (0=Dom, 1=Seg...)
+═══════════════════════════════════════════ */
+const TREINO_CFG = {
+  a1: { label:'A1', name:'Peito',    cor:'#c8f135', dayDefault:1 },
+  a2: { label:'A2', name:'Tríceps',  cor:'#a78bfa', dayDefault:1 },
+  b1: { label:'B1', name:'Costas',   cor:'#4af0b0', dayDefault:3 },
+  b2: { label:'B2', name:'Bíceps',   cor:'#f0a84a', dayDefault:3 },
+  c1: { label:'C1', name:'Pernas',   cor:'#ff6060', dayDefault:5 },
+  c2: { label:'C2', name:'Ombros',   cor:'#4af0b0', dayDefault:5 },
+};
+const TREINOS   = Object.keys(TREINO_CFG);
+const WEEK_DAYS = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+const DAY_NAMES = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+
+const STORAGE_KEY = 'meutreino_v3';
+const CFG_KEY     = 'meutreino_config_v3';
 const FB_URL_KEY  = 'meutreino_firebase_url';
 const FB_PATH     = '/meutreino_config.json';
-
-const TREINOS = ['a1','a2','b1','b2','c1','c2'];
-const WEEK_DAYS = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
-
-// Mapa: treino → índice do dia da semana padrão
-const TREINO_DAY_MAP = { a1:1, a2:2, b1:3, b2:4, c1:5, c2:6 };
 
 const MOTIVATIONAL = [
   'Incrível! Cada treino te aproxima do seu objetivo.',
@@ -774,353 +802,310 @@ const MOTIVATIONAL = [
   'Mais um concluído! A disciplina é o maior músculo.',
 ];
 
-let state = { completed: {}, openCards: {} };
+let state = { completed:{}, openCards:{} };
 let firebaseUrl = null;
 
-// ── utils ──
-function getWeekKey(date = new Date()) {
-  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
-  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  const week = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
-  return `${d.getUTCFullYear()}-W${String(week).padStart(2,'0')}`;
+/* ── utils ── */
+function getWeekKey(date=new Date()) {
+  const d = new Date(Date.UTC(date.getFullYear(),date.getMonth(),date.getDate()));
+  d.setUTCDate(d.getUTCDate()+4-(d.getUTCDay()||7));
+  const ys = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+  return `${d.getUTCFullYear()}-W${String(Math.ceil((((d-ys)/86400000)+1)/7)).padStart(2,'0')}`;
 }
-function loadState() {
-  try { const r = localStorage.getItem(STORAGE_KEY); if (r) state = {...state,...JSON.parse(r)}; } catch(e){}
-}
-function saveState() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e){}
-}
-function getThisWeek() {
-  const key = getWeekKey();
-  if (!state.completed[key]) state.completed[key] = {};
-  return state.completed[key];
-}
+function loadState() { try{const r=localStorage.getItem(STORAGE_KEY);if(r)state={...state,...JSON.parse(r)};}catch(e){} }
+function saveState() { try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch(e){} }
+function getThisWeek() { const k=getWeekKey(); if(!state.completed[k])state.completed[k]={}; return state.completed[k]; }
 
-// ── toast ──
+/* ── toast ── */
 let toastTimer;
 function showToast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
+  toastTimer=setTimeout(()=>el.classList.remove('show'),2800);
 }
 
-// ── modal ──
-function showModal({emoji, title, body}) {
-  document.getElementById('modalEmoji').textContent = emoji;
-  document.getElementById('modalTitle').textContent = title;
-  document.getElementById('modalBody').textContent  = body;
+/* ── modal ── */
+function showModal({emoji,title,body}) {
+  document.getElementById('modalEmoji').textContent=emoji;
+  document.getElementById('modalTitle').textContent=title;
+  document.getElementById('modalBody').textContent=body;
   document.getElementById('modalOverlay').classList.add('show');
 }
-function closeModal() { document.getElementById('modalOverlay').classList.remove('show'); }
+function closeModal(){document.getElementById('modalOverlay').classList.remove('show');}
 
-// ── week strip ──
-function buildWeekStrip() {
-  const strip = document.getElementById('weekStrip');
-  strip.innerHTML = '';
-  const week  = getThisWeek();
-  const today = new Date();
-  const dow   = today.getDay();
-  const monday = new Date(today);
-  monday.setDate(today.getDate() - ((dow + 6) % 7));
+/* ── config helpers ── */
+function loadCfg() { try{const r=localStorage.getItem(CFG_KEY);return r?JSON.parse(r):null;}catch(e){return null;} }
 
-  // Lê config para saber qual treino está em qual dia
-  let cfg = {};
-  try { const r = localStorage.getItem(CFG_KEY); if (r) cfg = JSON.parse(r); } catch(e){}
-
-  // Monta mapa dia→treino
-  const dayTreinoMap = {};
+/* Retorna mapa: dayIndex → [treinoKey, ...] */
+function buildDayMap(cfg) {
+  const map = {}; // {0:[], 1:['a1','a2'], ...}
+  for(let i=0;i<7;i++) map[i]=[];
   TREINOS.forEach(t => {
-    const dayName = cfg['day'+t.toUpperCase()] || cfg['day'+t] || null;
-    if (dayName) {
-      const idx = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'].indexOf(dayName);
-      if (idx >= 0) dayTreinoMap[idx] = t;
-    } else {
-      // default
-      dayTreinoMap[TREINO_DAY_MAP[t]] = t;
-    }
+    const dayName = cfg?.['day'+t.toUpperCase()] || null;
+    const idx = dayName ? DAY_NAMES.indexOf(dayName) : TREINO_CFG[t].dayDefault;
+    const dayIdx = idx >= 0 ? idx : TREINO_CFG[t].dayDefault;
+    map[dayIdx].push(t);
   });
+  return map;
+}
 
-  for (let i = 0; i < 7; i++) {
+/* ════════════════════════════════════════
+   WEEK STRIP — múltiplos treinos por dia
+════════════════════════════════════════ */
+function buildWeekStrip() {
+  const strip  = document.getElementById('weekStrip');
+  strip.innerHTML = '';
+  const week   = getThisWeek();
+  const today  = new Date();
+  const monday = new Date(today);
+  monday.setDate(today.getDate() - ((today.getDay()+6)%7));
+
+  const cfg    = loadCfg();
+  const dayMap = buildDayMap(cfg);
+
+  for(let i=0;i<7;i++) {
     const d = new Date(monday);
-    d.setDate(monday.getDate() + i);
-    const isToday   = d.toDateString() === today.toDateString();
-    const treinoKey = dayTreinoMap[d.getDay()] || null;
-    const isDone    = treinoKey && week[treinoKey];
+    d.setDate(monday.getDate()+i);
+    const isToday  = d.toDateString()===today.toDateString();
+    const treinos  = dayMap[d.getDay()] || [];
 
-    const el = document.createElement('div');
-    el.className = 'week-day' + (isToday ? ' today' : '') + (isDone ? ' done' : '');
+    const col = document.createElement('div');
+    col.className = 'week-day' + (isToday?' today':'');
 
-    if (!isDone) {
-      el.innerHTML = `<div class="week-day-inner">
-        <span class="wd-name">${WEEK_DAYS[d.getDay()]}</span>
-        <span class="wd-treino">${treinoKey ? treinoKey.toUpperCase() : '·'}</span>
-      </div>`;
+    // cabeçalho com nome do dia
+    const hdr = document.createElement('div');
+    hdr.className = 'wd-header';
+    hdr.textContent = WEEK_DAYS[d.getDay()];
+    col.appendChild(hdr);
+
+    const chips = document.createElement('div');
+    chips.className = 'wd-chips';
+
+    if(treinos.length === 0) {
+      // dia de descanso
+      const rest = document.createElement('div');
+      rest.className = 'wd-rest';
+      rest.textContent = '—';
+      chips.appendChild(rest);
+    } else {
+      treinos.forEach(t => {
+        const cfg_t = TREINO_CFG[t];
+        const done  = !!week[t];
+        const chip  = document.createElement('div');
+        chip.className = 'wd-chip' + (done?' done':'');
+        chip.textContent = cfg_t.label;
+        chip.style.background = done
+          ? 'color-mix(in srgb,'+cfg_t.cor+' 20%,transparent)'
+          : 'color-mix(in srgb,'+cfg_t.cor+' 12%,transparent)';
+        chip.style.color  = cfg_t.cor;
+        chip.style.border = '1px solid color-mix(in srgb,'+cfg_t.cor+' 30%,transparent)';
+        chip.title = cfg_t.name;
+        chip.addEventListener('click', () => switchTab(t));
+        chips.appendChild(chip);
+      });
     }
-    if (treinoKey) el.addEventListener('click', () => switchTab(treinoKey));
-    strip.appendChild(el);
+
+    col.appendChild(chips);
+    strip.appendChild(col);
   }
 }
 
-// ── progress ──
+/* ── progress ── */
 function updateProgress() {
   const week = getThisWeek();
-  const done = TREINOS.filter(k => week[k]).length;
-  const pct  = (done / TREINOS.length) * 100;
-  document.getElementById('weekProgressBar').style.width = pct + '%';
-  document.getElementById('weekLabel').textContent = done === TREINOS.length
+  const done = TREINOS.filter(k=>week[k]).length;
+  document.getElementById('weekProgressBar').style.width = (done/TREINOS.length*100)+'%';
+  document.getElementById('weekLabel').textContent = done===TREINOS.length
     ? '🎉 Semana completa! Parabéns!'
     : `${done} de ${TREINOS.length} treinos concluídos esta semana`;
 }
 
-// ── tab checks ──
+/* ── tab checks ── */
 function updateTabChecks() {
   const week = getThisWeek();
   TREINOS.forEach(k => {
-    const el = document.getElementById('check' + k.toUpperCase().replace(/(\d)/,'$1'));
-    // ids são checkA1, checkA2 etc
-    const el2 = document.getElementById('check' + k.charAt(0).toUpperCase() + k.charAt(1));
-    const target = el || el2;
-    if (target) target.classList.toggle('hidden', !week[k]);
+    const el = document.getElementById('check'+k.charAt(0).toUpperCase()+k.charAt(1).toUpperCase());
+    if(el) el.classList.toggle('hidden',!week[k]);
   });
 }
 
-// ── conclude buttons ──
+/* ── conclude buttons ── */
 function updateConcludeButtons() {
   const week = getThisWeek();
   TREINOS.forEach(k => {
-    const id  = 'btnConclude' + k.charAt(0).toUpperCase() + k.charAt(1).toUpperCase();
-    const btn = document.getElementById(id);
-    if (!btn) return;
-    const done = week[k];
-    btn.classList.toggle('done', done);
-    btn.innerHTML = done
-      ? `<span class="btn-conclude-icon">✓</span> Treino ${k.toUpperCase()} Concluído`
-      : `<span class="btn-conclude-icon">✓</span> Marcar Treino ${k.toUpperCase()} como Concluído`;
+    const btn = document.getElementById('btnConclude'+k.charAt(0).toUpperCase()+k.charAt(1).toUpperCase());
+    if(!btn)return;
+    const done=week[k];
+    btn.classList.toggle('done',done);
+    btn.innerHTML=done
+      ?`<span class="btn-conclude-icon">✓</span> Treino ${k.toUpperCase()} Concluído`
+      :`<span class="btn-conclude-icon">✓</span> Marcar Treino ${k.toUpperCase()} como Concluído`;
   });
 }
 
 function handleConclude(key) {
-  const week = getThisWeek();
-  if (week[key]) {
-    week[key] = false;
-    saveState();
-    updateAll();
-    showToast(`Treino ${key.toUpperCase()} desmarcado.`);
-    return;
-  }
-  week[key] = true;
-  saveState();
-  updateAll();
-  const done = TREINOS.filter(k => week[k]).length;
-  if (done === TREINOS.length) {
-    showModal({ emoji:'🏆', title:'Semana Completa!', body:'Você concluiu todos os 6 treinos desta semana. Descanso merecido!' });
+  const week=getThisWeek();
+  if(week[key]){week[key]=false;saveState();updateAll();showToast(`Treino ${key.toUpperCase()} desmarcado.`);return;}
+  week[key]=true;saveState();updateAll();
+  const done=TREINOS.filter(k=>week[k]).length;
+  if(done===TREINOS.length){
+    showModal({emoji:'🏆',title:'Semana Completa!',body:'Você concluiu todos os 6 treinos desta semana. Descanso merecido!'});
   } else {
-    showModal({ emoji:'💪', title:`Treino ${key.toUpperCase()} Concluído!`, body: MOTIVATIONAL[Math.floor(Math.random()*MOTIVATIONAL.length)] });
+    showModal({emoji:'💪',title:`Treino ${key.toUpperCase()} Concluído!`,body:MOTIVATIONAL[Math.floor(Math.random()*MOTIVATIONAL.length)]});
   }
 }
 
-// ── tabs ──
+/* ── tabs ── */
 function switchTab(tabId) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabId));
-  document.querySelectorAll('.tab-section').forEach(s => s.classList.toggle('active', s.id === 'tab-' + tabId));
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tabId));
+  document.querySelectorAll('.tab-section').forEach(s=>s.classList.toggle('active',s.id==='tab-'+tabId));
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// ── cards ──
+/* ── cards ── */
 function toggleCard(card) {
-  const id = card.dataset.id;
+  const id=card.dataset.id;
   card.classList.toggle('open');
-  state.openCards[id] = card.classList.contains('open');
+  state.openCards[id]=card.classList.contains('open');
   saveState();
 }
 function restoreOpenCards() {
-  document.querySelectorAll('.ex-card').forEach(card => {
-    if (state.openCards[card.dataset.id]) card.classList.add('open');
+  document.querySelectorAll('.ex-card').forEach(card=>{if(state.openCards[card.dataset.id])card.classList.add('open');});
+}
+
+/* ── reset ── */
+function resetWeek(){state.completed[getWeekKey()]={};saveState();updateAll();showToast('Semana resetada ✓');}
+
+/* ── updateAll ── */
+function updateAll(){buildWeekStrip();updateProgress();updateTabChecks();updateConcludeButtons();}
+
+/* ── applyConfig ── */
+function applyConfig(cfg) {
+  if(!cfg)return;
+  TREINOS.forEach(t => {
+    const TT=t.charAt(0).toUpperCase()+t.charAt(1).toUpperCase();
+    const TT2=t.charAt(0).toUpperCase()+t.charAt(1); // A1, A2...
+    const dayEl=document.getElementById('day'+TT2);
+    if(dayEl&&cfg['day'+TT]) dayEl.textContent=cfg['day'+TT];
+    const sel=document.getElementById('cfg_day'+TT2);
+    if(sel&&cfg['day'+TT]) sel.value=cfg['day'+TT];
+
+    let total=0;
+    ['warm','musc','card','str'].forEach(f=>{
+      const v=cfg[`t${TT}_${f}`];
+      if(v!==undefined){
+        const span=document.getElementById(`t${TT2}_${f}`);
+        if(span){span.textContent=v+"'";total+=parseInt(v)||0;}
+        const inp=document.getElementById(`cfg_t${TT2}_${f}`);
+        if(inp)inp.value=v;
+      }
+    });
+    const dur=document.getElementById('duration'+TT2);
+    if(dur&&total>0)dur.textContent='~'+total+' min';
   });
 }
 
-// ── reset ──
-function resetWeek() {
-  state.completed[getWeekKey()] = {};
-  saveState();
-  updateAll();
-  showToast('Semana resetada ✓');
-}
-
-// ── update all ──
-function updateAll() {
-  buildWeekStrip();
-  updateProgress();
-  updateTabChecks();
-  updateConcludeButtons();
-}
-
-// ── config ──
 function getConfigFromForm() {
-  const cfg = {};
-  TREINOS.forEach(t => {
-    const sel = document.getElementById('cfg_day' + t.charAt(0).toUpperCase() + t.charAt(1));
-    if (sel) cfg['day' + t.toUpperCase()] = sel.value;
-    ['warm','musc','card','str'].forEach(f => {
-      const inp = document.getElementById(`cfg_t${t.charAt(0).toUpperCase()}${t.charAt(1)}_${f}`);
-      if (inp) cfg[`t${t.toUpperCase()}_${f}`] = inp.value;
+  const cfg={};
+  TREINOS.forEach(t=>{
+    const TT=t.charAt(0).toUpperCase()+t.charAt(1).toUpperCase();
+    const TT2=t.charAt(0).toUpperCase()+t.charAt(1);
+    const sel=document.getElementById('cfg_day'+TT2);
+    if(sel)cfg['day'+TT]=sel.value;
+    ['warm','musc','card','str'].forEach(f=>{
+      const inp=document.getElementById(`cfg_t${TT2}_${f}`);
+      if(inp)cfg[`t${TT}_${f}`]=inp.value;
     });
   });
   return cfg;
 }
 
-function applyConfig(cfg) {
-  if (!cfg) return;
-  TREINOS.forEach(t => {
-    const TT = t.charAt(0).toUpperCase() + t.charAt(1);
-    const dayEl = document.getElementById('day' + TT);
-    if (dayEl && cfg['day' + TT.toUpperCase()]) dayEl.textContent = cfg['day' + TT.toUpperCase()];
-    const sel = document.getElementById('cfg_day' + TT);
-    if (sel && cfg['day' + TT.toUpperCase()]) sel.value = cfg['day' + TT.toUpperCase()];
+/* ── firebase ── */
+function setSyncStatus(s,text){document.getElementById('syncDot').className='sync-dot '+s;document.getElementById('syncText').textContent=text;}
+async function fbGet(url){const r=await fetch(url+FB_PATH);if(!r.ok)throw new Error('fail');return r.json();}
+async function fbSet(url,data){const r=await fetch(url+FB_PATH,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});if(!r.ok)throw new Error('fail');}
+function showConnectedUI(url){document.getElementById('firebaseSetupCard').style.display='none';document.getElementById('firebaseConnectedCard').style.display='block';document.getElementById('fbUrlInput').value=url;setSyncStatus('online','☁️ Sincronizado — dados em todos os dispositivos');}
+function showDisconnectedUI(){document.getElementById('firebaseSetupCard').style.display='block';document.getElementById('firebaseConnectedCard').style.display='none';setSyncStatus('','Não conectado — dados salvos só neste dispositivo');}
 
-    let total = 0;
-    ['warm','musc','card','str'].forEach(f => {
-      const v = cfg[`t${TT.toUpperCase()}_${f}`];
-      if (v !== undefined) {
-        const span = document.getElementById(`t${TT}_${f}`);
-        if (span) { span.textContent = v + "'"; total += parseInt(v)||0; }
-        const inp = document.getElementById(`cfg_t${TT}_${f}`);
-        if (inp) inp.value = v;
-      }
-    });
-    const dur = document.getElementById('duration' + TT);
-    if (dur && total > 0) dur.textContent = '~' + total + ' min';
-  });
-}
-
-// ── firebase ──
-function setSyncStatus(s, text) {
-  document.getElementById('syncDot').className   = 'sync-dot ' + s;
-  document.getElementById('syncText').textContent = text;
-}
-async function fbGet(url) {
-  const r = await fetch(url + FB_PATH);
-  if (!r.ok) throw new Error('fail');
-  return r.json();
-}
-async function fbSet(url, data) {
-  const r = await fetch(url + FB_PATH, { method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data) });
-  if (!r.ok) throw new Error('fail');
-}
-function showConnectedUI(url) {
-  document.getElementById('firebaseSetupCard').style.display    = 'none';
-  document.getElementById('firebaseConnectedCard').style.display = 'block';
-  document.getElementById('fbUrlInput').value = url;
-  setSyncStatus('online','☁️ Sincronizado — dados em todos os dispositivos');
-}
-function showDisconnectedUI() {
-  document.getElementById('firebaseSetupCard').style.display    = 'block';
-  document.getElementById('firebaseConnectedCard').style.display = 'none';
-  setSyncStatus('','Não conectado — dados salvos só neste dispositivo');
-}
-
-// ── init ──
+/* ── init ── */
 async function init() {
   loadState();
 
-  const splash = document.getElementById('splash');
-  const app    = document.getElementById('app');
-  setTimeout(() => {
+  // splash
+  setTimeout(()=>{
+    const splash=document.getElementById('splash');
     splash.classList.add('out');
-    setTimeout(() => {
-      splash.style.display = 'none';
-      app.classList.remove('hidden');
+    setTimeout(()=>{
+      splash.style.display='none';
+      document.getElementById('app').classList.remove('hidden');
+      const cfg=loadCfg();
+      if(cfg)applyConfig(cfg);
       updateAll();
       restoreOpenCards();
-    }, 600);
-  }, 1400);
+    },600);
+  },1400);
 
   // tabs
-  document.getElementById('tabNav').addEventListener('click', e => {
-    const btn = e.target.closest('.tab-btn');
-    if (btn?.dataset.tab) switchTab(btn.dataset.tab);
+  document.getElementById('tabNav').addEventListener('click',e=>{
+    const btn=e.target.closest('.tab-btn');
+    if(btn?.dataset.tab)switchTab(btn.dataset.tab);
   });
 
   // cards
-  document.querySelector('.main-content').addEventListener('click', e => {
-    const top = e.target.closest('.ex-card-top');
-    if (top) { const card = top.closest('.ex-card'); if (card) toggleCard(card); }
+  document.querySelector('.main-content').addEventListener('click',e=>{
+    const top=e.target.closest('.ex-card-top');
+    if(top){const card=top.closest('.ex-card');if(card)toggleCard(card);}
   });
 
   // conclude
-  TREINOS.forEach(k => {
-    const id  = 'btnConclude' + k.charAt(0).toUpperCase() + k.charAt(1).toUpperCase();
-    const btn = document.getElementById(id);
-    if (btn) btn.addEventListener('click', () => handleConclude(k));
+  TREINOS.forEach(k=>{
+    const btn=document.getElementById('btnConclude'+k.charAt(0).toUpperCase()+k.charAt(1).toUpperCase());
+    if(btn)btn.addEventListener('click',()=>handleConclude(k));
   });
 
   // reset
-  document.getElementById('btnReset').addEventListener('click', () => {
-    if (confirm('Resetar todos os treinos desta semana?')) resetWeek();
-  });
+  document.getElementById('btnReset').addEventListener('click',()=>{if(confirm('Resetar todos os treinos desta semana?'))resetWeek();});
 
   // modal
-  document.getElementById('modalBtn').addEventListener('click', closeModal);
-  document.getElementById('modalOverlay').addEventListener('click', e => { if (e.target === document.getElementById('modalOverlay')) closeModal(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  document.getElementById('modalBtn').addEventListener('click',closeModal);
+  document.getElementById('modalOverlay').addEventListener('click',e=>{if(e.target===document.getElementById('modalOverlay'))closeModal();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 
-  // config local
-  try { const r = localStorage.getItem(CFG_KEY); if (r) applyConfig(JSON.parse(r)); } catch(e){}
-
-  // firebase
-  const savedUrl = localStorage.getItem(FB_URL_KEY);
-  if (savedUrl) {
-    firebaseUrl = savedUrl;
+  // firebase init
+  const savedUrl=localStorage.getItem(FB_URL_KEY);
+  if(savedUrl){
+    firebaseUrl=savedUrl;
     showConnectedUI(savedUrl);
     setSyncStatus('syncing','Carregando do Firebase...');
-    try {
-      const data = await fbGet(savedUrl);
-      if (data) { localStorage.setItem(CFG_KEY, JSON.stringify(data)); applyConfig(data); updateAll(); }
+    try{
+      const data=await fbGet(savedUrl);
+      if(data){localStorage.setItem(CFG_KEY,JSON.stringify(data));applyConfig(data);updateAll();}
       setSyncStatus('online','☁️ Sincronizado — dados em todos os dispositivos');
-    } catch(e) { setSyncStatus('error','⚠️ Erro ao conectar ao Firebase'); }
+    }catch(e){setSyncStatus('error','⚠️ Erro ao conectar ao Firebase');}
   }
 
-  document.getElementById('btnConnectFirebase').addEventListener('click', async () => {
-    const url = document.getElementById('fbUrlInput').value.trim().replace(/\/$/,'');
-    if (!url.startsWith('https://')) { showToast('⚠️ URL inválida'); return; }
+  document.getElementById('btnConnectFirebase').addEventListener('click',async()=>{
+    const url=document.getElementById('fbUrlInput').value.trim().replace(/\/$/,'');
+    if(!url.startsWith('https://')){showToast('⚠️ URL inválida');return;}
     setSyncStatus('syncing','Testando conexão...');
-    try {
-      await fbGet(url);
-      firebaseUrl = url;
-      localStorage.setItem(FB_URL_KEY, url);
-      showConnectedUI(url);
-      showToast('✅ Firebase conectado!');
-    } catch(e) {
-      setSyncStatus('error','⚠️ Erro — verifique a URL');
-      showToast('❌ Não foi possível conectar');
-    }
+    try{await fbGet(url);firebaseUrl=url;localStorage.setItem(FB_URL_KEY,url);showConnectedUI(url);showToast('✅ Firebase conectado!');}
+    catch(e){setSyncStatus('error','⚠️ Erro — verifique a URL');showToast('❌ Não foi possível conectar');}
   });
 
-  document.getElementById('btnDisconnect').addEventListener('click', () => {
-    firebaseUrl = null;
-    localStorage.removeItem(FB_URL_KEY);
-    showDisconnectedUI();
-    showToast('Desconectado do Firebase');
+  document.getElementById('btnDisconnect').addEventListener('click',()=>{
+    firebaseUrl=null;localStorage.removeItem(FB_URL_KEY);showDisconnectedUI();showToast('Desconectado do Firebase');
   });
 
-  document.getElementById('btnSaveConfig').addEventListener('click', async () => {
-    const cfg = getConfigFromForm();
-    localStorage.setItem(CFG_KEY, JSON.stringify(cfg));
+  document.getElementById('btnSaveConfig').addEventListener('click',async()=>{
+    const cfg=getConfigFromForm();
+    localStorage.setItem(CFG_KEY,JSON.stringify(cfg));
     applyConfig(cfg);
-    updateAll();
-    if (firebaseUrl) {
+    updateAll(); // reconstrói week strip com novos dias
+    if(firebaseUrl){
       setSyncStatus('syncing','Salvando na nuvem...');
-      try {
-        await fbSet(firebaseUrl, cfg);
-        setSyncStatus('online','☁️ Sincronizado — dados em todos os dispositivos');
-        showToast('☁️ Salvo na nuvem!');
-      } catch(e) {
-        setSyncStatus('error','⚠️ Erro ao salvar no Firebase');
-        showToast('❌ Erro ao salvar na nuvem');
-      }
+      try{await fbSet(firebaseUrl,cfg);setSyncStatus('online','☁️ Sincronizado — dados em todos os dispositivos');showToast('☁️ Salvo na nuvem!');}
+      catch(e){setSyncStatus('error','⚠️ Erro ao salvar no Firebase');showToast('❌ Erro ao salvar na nuvem');}
     } else {
       showToast('💾 Configurações salvas!');
     }
@@ -1128,7 +1113,7 @@ async function init() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded',init);
 </script>
 </body>
 </html>
